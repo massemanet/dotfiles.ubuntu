@@ -25,27 +25,17 @@ sudo apt-get install \
      openssh-server plasma-workspace-wayland powertop tmux
 
 # get my stuff
-(cd /tmp && \
-    git clone https://github.com/massemanet/dotfiles.kubuntu && \
-    git remote set-url origin git@github.com:massemanet/dotfiles.kubuntu.git)
-mv /tmp/dotfiles.kubuntu/.git ~
+[ ! -e ~/.git ] &&
+    cd /tmp && \
+	rm -rf dotfiles.kubuntu && \
+	git clone https://github.com/massemanet/dotfiles.kubuntu && \
+	cd dotfiles.kubuntu && \
+	git remote set-url origin git@github.com:massemanet/dotfiles.kubuntu && \
+	mv /tmp/dotfiles.kubuntu/.git ~
 (cd && git reset --hard)
 
 # emacs (cask)
-curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
-(cd ~/.emacs.d && ~/.cask/bin/cask install)
-
-# install spotify-client
-sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net \
-     --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
-echo deb http://repository.spotify.com stable non-free |\
-    sudo tee /etc/apt/sources.list.d/spotify.list
-wget http://ftp.se.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb
-sudo apt install -y ./libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb
-sudo apt update
-sudo apt install -y spotify-client
-
-# install slack
-# download .deb from slack.com
-sudo dpkg -i ~/Downloads/slack-desktop-*-amd64.deb
-sudo apt-get install -f -y
+[ ! ~/.cask ] && \
+    curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python && \
+    cd ~/.emacs.d && \
+    ~/.cask/bin/cask install
