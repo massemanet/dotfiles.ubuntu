@@ -1,2 +1,3 @@
 # dotfiles.kubuntu
-kubuntu dotfiles!
+
+kubuntu dotfiles! testing the Dell XPS13.
