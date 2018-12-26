@@ -7,6 +7,7 @@ foo*
 /.Xauthority
 /.aspell.*
 /.aws/
+/.awsvault/
 /.bash_history
 /.bash_logout
 /.cache/
@@ -15,17 +16,19 @@ foo*
 /.emacs.d/
 /.face*
 /.gnupg/
-/.gtkrc-2.0
+/.gtkrc-*
 /.kde/
 /.lastpass/
 /.lesshst
 /.local/
 /.localbashrc
 /.mozilla/
+/.password-store/
+/.pki/
 /.screenlayout/
 /.ssh/
 /.sudo_as_admin_successful
-/.xsession-errors*
+/.xsession-errors
 
 /Desktop/
 /Downloads/

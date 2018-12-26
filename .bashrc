@@ -67,7 +67,6 @@ erlang() { startcontainer "${FUNCNAME[0]}" "${1:-"bash"}" "${2:-"~/git"}"; }
 go()     { startcontainer "${FUNCNAME[0]}" "${1:-"bash"}" "${2:-"~/git"}"; }
 java()   { startcontainer "${FUNCNAME[0]}" "${1:-"bash"}" "${2:-"~/git"}"; }
 julia()  { startcontainer "${FUNCNAME[0]}" "${1:-"bash"}" "${2:-"~/git"}"; }
-python() { startcontainer "${FUNCNAME[0]}" "${1:-"bash"}" "${2:-"~/git"}"; }
 rust()   { startcontainer "${FUNCNAME[0]}" "${1:-"bash"}" "${2:-"~/git"}"; }
 wg2()    { startcontainer "${FUNCNAME[0]}" "${1:-"bash"}" "${2:-"~/wg2"}"; }
 

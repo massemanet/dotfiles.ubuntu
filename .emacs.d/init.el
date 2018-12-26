@@ -20,7 +20,7 @@
 (add-to-list 'load-path "~/.emacs.d/masserlang")
 
 ;; turn on good shit
-(set-language-environment "ASCII")
+;;(set-language-environment "ASCII")
 (show-paren-mode t)
 (transient-mark-mode t)
 (global-font-lock-mode t)
@@ -188,6 +188,9 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (yaml-mode solarized-theme smart-mode-line rust-playground purescript-mode projectile pallet nyan-mode lsp-ui lsp-java kubernetes julia-repl julia-mode json-mode js2-mode highlight-parentheses gruvbox-theme go-mode flymake-rust flymake-jshint flycheck-rust flycheck-rebar3 flycheck-julia flycheck-elixir flycheck-demjsonlint exec-path-from-shell erlang eproject dockerfile-mode dap-mode company-lsp company-distel cargo)))
  '(term-default-bg-color nil)
  '(term-default-fg-color nil))
 
@@ -196,4 +199,4 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:weight normal :height 100 :width normal :foundry "font" :family "Courier")))))
+ '(default ((t (:height 110 :family "Hack")))))
