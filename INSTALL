@@ -21,7 +21,7 @@ sudo apt-get install \
      curl deborphan docker.io emacs-lucid \
      erlang-common-test erlang-eunit erlang-dialyzer \
      erlang-mode erlang-parsetools erlang-dev \
-     feh git htop jq keybase mosh ncdu netcat-traditional \
+     feh git htop jq make mosh ncdu netcat-traditional \
      openssh-server pass plasma-workspace-wayland powertop tmux
 
 # get my stuff
