@@ -25,9 +25,15 @@ foo*
 /.mozilla/
 /.password-store/
 /.pki/
+/.pulse-cookie
 /.screenlayout/
 /.ssh/
+/.steam/
+/.steampath
+/.steampid
 /.sudo_as_admin_successful
+/.uplink/
+/.xpra/
 /.xsession-errors
 
 /Desktop/
