@@ -17,6 +17,7 @@ foo*
 /.face*
 /.gnupg/
 /.gtkrc-*
+/.intellij/
 /.kde/
 /.lastpass/
 /.lesshst
@@ -38,6 +39,7 @@ foo*
 
 /Desktop/
 /Downloads/
+/snap/
 
 /git/
 /wg2/
