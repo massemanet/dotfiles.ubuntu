@@ -1,7 +1,8 @@
 # one path to rule them all
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 [ -d /opt/bin ] && export PATH=/opt/bin:$PATH
 [ -d $HOME/bin ] && export PATH=$HOME/bin:$PATH
+[ -d /snap/bin ] && export PATH=/snap/bin:$PATH
 
 # one locale to rule them all
 unset  LC_ALL
