@@ -24,6 +24,7 @@ foo*
 /.local/
 /.localbashrc
 /.mozilla/
+/.nmcli*
 /.password-store/
 /.pki/
 /.pulse-cookie
