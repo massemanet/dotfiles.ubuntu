@@ -21,8 +21,8 @@ sudo apt-get install \
      curl deborphan docker.io emacs-lucid \
      erlang-common-test erlang-eunit erlang-dialyzer \
      erlang-mode erlang-parsetools erlang-dev \
-     feh git htop jq make mosh ncdu netcat-traditional \
-     openssh-server pass powertop scrot tmux
+     feh git htop i3 jq make mosh ncdu netcat-traditional \
+     openssh-server pass powertop scrot shellcheck tmux
 
 sudo snap install chromium spotify
 
