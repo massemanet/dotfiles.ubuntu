@@ -24,7 +24,7 @@ MOUSE="$(get_input "GASIA PS2toUSB Adapter Mouse")"
 xinput set-prop "$MOUSE" 288 1
 
 KBD_LAPTOP="$(get_input "AT Translated Set 2 keyboard")"
-setxkbmap -device "$KBD_LAPTOP" -option ctrl:nocaps
+setxkbmap -device "$KBD_LAPTOP" -option altwin:swap_lalt_lwin -option ctrl:nocaps
 
 KBD_HH="$(get_input "GASIA PS2toUSB Adapter System")"
-setxkbmap -device "$KBD_HH" -option altwin:swap_lalt_lwin
+setxkbmap -device "$KBD_HH" -option ctrl:nocaps
