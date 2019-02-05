@@ -3,7 +3,7 @@
 {
   echo "CONTAINER IMAGE REPO TAG PORTS";
   join \
-      <(docker ps | \
+      <(docker ps -a | \
         tail -n +2 | \
         awk 'match($0, /[0-9]+(\.[0-9]+){3}:[0-9]+->[0-9]+/) {print $2,$1,substr($0,RSTART,RLENGTH); next}
              {print $2,$1,"-"}' | \
