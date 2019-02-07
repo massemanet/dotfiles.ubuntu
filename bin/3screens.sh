@@ -15,24 +15,30 @@ xrandr --fb 7000x4000 \
 #       --output DP-1-1 --auto --rotate normal --pos 1280x720 \
 #       --output DP-1-2 --auto --rotate normal --pos 3200x720
 
+## set up pointing devices
+
 TOUCHPAD="$(get_input "DLL075B:01 06CB:76AF Touchpad")"
-xinput set-prop "$TOUCHPAD" 287 1  # Natural Scrolling
-xinput set-prop "$TOUCHPAD" 279 1  # Tapping
+if [ -n "$TOUCHPAD" ]; then
+    xinput set-prop "$TOUCHPAD" 287 1  # Natural Scrolling
+    xinput set-prop "$TOUCHPAD" 279 1  # Tapping
+fi
 
 MOUSE="$(get_input "GASIA PS2toUSB Adapter Mouse")"
-xinput set-prop "$MOUSE" 287 1  # Natural Scrolling
+if [ -n "$MOUSE" ]; then
+    xinput set-prop "$MOUSE" 287 1  # Natural Scrolling
+fi
 
-KBD_LAPTOP="$(get_input "AT Translated Set 2 keyboard")"
-setxkbmap -device "$KBD_LAPTOP" \
-          -layout us,se \
-          -option "" \
-          -option grp:shifts_toggle \
-          -option altwin:swap_lalt_lwin \
-          -option ctrl:nocaps
+## set up keyboards
+
+KBD_XPS="$(get_input "AT Translated Set 2 keyboard")"
+if [ -n "$KBD_XPS" ]; then
+    setxkbmap -device "$KBD_XPS" \
+              -layout us,se -option "" -option grp:shifts_toggle -option ctrl:nocaps
+fi
 
 KBD_HH="$(get_input "GASIA PS2toUSB Adapter    ")"
-setxkbmap -device "$KBD_HH" \
-          -layout us,se \
-          -option "" \
-          -option grp:shifts_toggle \
-          -option ctrl:nocaps
+if [ -n "$KBD_HH" ]; then
+    setxkbmap -device "$KBD_HH" \
+              -layout us,se -option "" -option grp:shifts_toggle -option ctrl:nocaps \
+              -option altwin:swap_lalt_lwin
+fi

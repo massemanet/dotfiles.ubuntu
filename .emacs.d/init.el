@@ -126,7 +126,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (defun my-whitespace-setup()
   (require 'whitespace)
-  (setq whitespace-style (list 'face 'tabs 'trailing 'lines-tail 'empty))
+  (setq whitespace-style (list 'face 'tabs 'trailing 'empty))
   (global-whitespace-mode t))
 
 ;; this is default in emacs 24.4
