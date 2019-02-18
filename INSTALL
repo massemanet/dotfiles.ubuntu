@@ -9,7 +9,9 @@ sudo apt-get install -y \
      feh g++ git htop i3 jq libnotify-bin \
      make mosh ncdu netcat-traditional nodm \
      openjdk-8-jdk-headless openjdk-11-jdk-headless openssh-server \
-     pass pgadmin3 powertop scrot shellcheck \
+     pass pgadmin3 powertop \
+     qutebrowser \
+     scrot shellcheck \
      tmux tshark wireshark-qt xautolock
 
 # special song and dance for docker
