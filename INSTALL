@@ -53,3 +53,23 @@ sudo snap install intellij-idea-community --classic
 [ ! -d ~/.cask ] && \
     curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 (cd ~/.emacs.d && ~/.cask/bin/cask install)
+
+# set up lid event
+# /etc/acpi/events/lidevent
+# event=button/lid
+# action=/etc/acpi/lidevent.sh "%e"
+
+# /etc/acpi/lidevent.sh
+# #!/bin/bash
+# for f in /home/*/bin/lidevent.sh
+# do if [ -x "$f" ]
+#    then su $(stat -c "%U" $f) -c "$f $1"
+#    fi
+# done
+
+# let systemd resolve
+# /etc/resolv.conf -> /run/systemd/resolve/resolv.conf
+# tell systemd resolver to use google
+# /etc/systemd/resolved.conf
+# [Resolve]
+# DNS=8.8.8.8
