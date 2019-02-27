@@ -17,6 +17,7 @@ find "$d" \
      -path "*/.deps"   -prune -o \
      -path "*/#*"      -prune -o \
      -path "*~"        -prune -o \
-     -type f $n \
+     -path "bazel-*"   -prune -o \
+     -type f ${n:+$n} \
      -exec grep -inIH "$1" {} \;
 set +f
