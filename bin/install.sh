@@ -42,7 +42,7 @@ get-keybase() {
 
 get-aws-vault() {
     local r
-    local VSN=""
+    local VSN="${1:-}"
     local DLPAGE="https://github.com/99designs/aws-vault/releases"
     local RE="download/v[0-9\\.]+/aws-vault-linux-amd64"
 
@@ -55,7 +55,7 @@ get-aws-vault() {
 
 get-docker-compose() {
     local r
-    local VSN="$1"
+    local VSN="${1:-}"
     local DLPAGE="https://github.com/docker/compose/releases"
     local RE="download/[0-9\\.]+/docker-compose-Linux-x86_64"
 
@@ -67,7 +67,7 @@ get-docker-compose() {
 }
 
 get-bazel() {
-    local VSN="${2:-}"
+    local VSN="${1:-}"
     local GH="https://github.com/bazelbuild/bazel/releases"
     local RE="download/[.0-9-]+/bazel-[.0-9-]+-installer-linux-x86_64.sh"
     local r
@@ -77,7 +77,7 @@ get-bazel() {
     curl -sSL "$GH/$r" > /tmp/bazel.sh
     chmod +x /tmp/bazel.sh
     sudo bash -x /tmp/bazel.sh
-    /usr/local/bin/bazel help
+    sudo rm -f /etc/bash_completion.d/bazel-complete.bash
     sudo ln -s /usr/local/lib/bazel/bin/bazel-complete.bash /etc/bash_completion.d
 }
 
