@@ -4,6 +4,7 @@
 \#*
 foo*
 
+/.ICEauthority
 /.IdeaIC*/
 /.Xauthority
 /.aspell.*
@@ -30,6 +31,7 @@ foo*
 /.password-store/
 /.pki/
 /.pulse-cookie
+/.python_history
 /.screenlayout/
 /.ssh/
 /.steam/

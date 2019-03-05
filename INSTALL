@@ -5,28 +5,17 @@ sudo apt-get upgrade -y && \
 sudo apt-get install -y \
      apt-transport-https \
      curl deborphan emacs-lucid \
-     erlang-common-test erlang-eunit erlang-dialyzer \
-     erlang-mode erlang-parsetools erlang-dev \
      feh g++ git htop i3 jq libnotify-bin \
      make mosh ncdu netcat-traditional nodm \
-     openjdk-8-jdk-headless openjdk-11-jdk-headless openssh-server \
-     pass pgadmin3 powertop \
+     pass powertop \
      qutebrowser \
      scrot shellcheck \
-     tmux tshark wireshark-qt xautolock
-
-~/bin/install.sh docker
-~/bin/install.sh keybase
+     tmux xautolock
 
 # snap is nice if it works
 # the docker snap is sadly broken
 sudo snap install chromium firefox opera spotify
 sudo snap install intellij-idea-community --classic
-
-# edit /etc/default/nodm to have these lines
-# NODM_ENABLED=true
-# NODM_USER=masse
-# NODM_XSESSION=/home/masse/.xsession
 
 # get my stuff
 [ ! -e ~/.git ] &&
@@ -38,10 +27,26 @@ sudo snap install intellij-idea-community --classic
 	mv /tmp/dotfiles.kubuntu/.git ~
 (cd && git reset --hard)
 
+~/bin/install.sh aws-vault
+~/bin/install.sh awscli
+~/bin/install.sh bazel 0.19
+~/bin/install.sh docker
+~/bin/install.sh docker-compose
+~/bin/install.sh erlang
+~/bin/install.sh java
+~/bin/install.sh keybase
+~/bin/install.sh pgadmin
+~/bin/install.sh python
+
 # emacs (cask)
 [ ! -d ~/.cask ] && \
     curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 (cd ~/.emacs.d && ~/.cask/bin/cask install)
+
+# edit /etc/default/nodm to have these lines
+# NODM_ENABLED=true
+# NODM_USER=masse
+# NODM_XSESSION=/home/masse/.xsession
 
 # set up lid event
 # /etc/acpi/events/lidevent
