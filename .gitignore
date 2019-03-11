@@ -15,6 +15,7 @@ foo*
 /.cache/
 /.cask/
 /.config/
+/.docker/
 /.emacs.d/
 /.face*
 /.gnupg/
@@ -29,6 +30,8 @@ foo*
 /.mozilla/
 /.nmcli*
 /.password-store/
+/.pgadmin3
+/.pgpass
 /.pki/
 /.pulse-cookie
 /.python_history
@@ -47,6 +50,7 @@ foo*
 /coverage/
 /snap/
 /stale_outputs_checked
+/pgadmin.log
 
 /git/
 /wg2/

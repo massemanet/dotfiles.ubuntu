@@ -1,3 +1,6 @@
+export LANG=en_US.utf8
+dbus-update-activation-environment --systemd DISPLAY
+
 i3 &
 
 I3_PID="$!"

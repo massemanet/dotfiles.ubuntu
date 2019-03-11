@@ -175,6 +175,11 @@ Repeated invocations toggle between the two most recently open buffers."
         (flyspell-mode)
         (setq flyspell-dictionaries (quote ("american" "svenska"))))))
 
+(defun align-regexp-buffer (regexp)
+  "Align current buffer with regexp."
+  (interactive (list (concat "\\(\\s-*\\)" (read-string "Align regexp: "))))
+  (align-regexp (point-min) (point-max) regexp 1 nil t))
+
 (defun indent-buffer ()
   "Indent current buffer."
   (interactive)
@@ -199,4 +204,4 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:height 90 :family "Hack")))))
+ '(default ((t (:height 80 :family "Fixed")))))
