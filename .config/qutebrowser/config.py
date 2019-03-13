@@ -24,6 +24,7 @@ c.bindings.commands['normal'] = {
 	'<alt-v>': 'scroll-page 0 -0.5',
 	'<ctrl-shift-v>': 'scroll-page 0 1',
 	'<alt-shift-v>': 'scroll-page 0 -1',
+        '<ctrl-shift-r>': 'reload',
 	# FIXME come up with logical bindings for scrolling left/right
 
 	# Commands

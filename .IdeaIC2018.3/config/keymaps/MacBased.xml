@@ -20,6 +20,7 @@
     <keyboard-shortcut first-keystroke="ctrl open_bracket" />
     <mouse-shortcut keystroke="control button1" />
   </action>
+  <action id="Debug" />
   <action id="Editor Copy">
     <keyboard-shortcut first-keystroke="shift ctrl w" />
     <keyboard-shortcut first-keystroke="alt c" />
@@ -35,6 +36,10 @@
     <keyboard-shortcut first-keystroke="ctrl z" />
     <keyboard-shortcut first-keystroke="alt z" />
   </action>
+  <action id="EditorDelete">
+    <keyboard-shortcut first-keystroke="delete" />
+    <keyboard-shortcut first-keystroke="ctrl d" />
+  </action>
   <action id="Find">
     <keyboard-shortcut first-keystroke="ctrl s" />
   </action>
@@ -45,15 +50,18 @@
     <keyboard-shortcut first-keystroke="alt g" />
   </action>
   <action id="FindPrevious">
-    <keyboard-shortcut first-keystroke="ctrl alt g" />
+    <keyboard-shortcut first-keystroke="shift alt g" />
   </action>
   <action id="FindUsages">
-    <keyboard-shortcut first-keystroke="alt f7" />
-    <mouse-shortcut keystroke="control button3" />
+    <mouse-shortcut keystroke="shift control button3" />
   </action>
   <action id="FindUsagesInFile">
     <keyboard-shortcut first-keystroke="meta f7" />
     <mouse-shortcut keystroke="control alt button3" />
+  </action>
+  <action id="GotoDeclaration">
+    <keyboard-shortcut first-keystroke="shift ctrl g" />
+    <mouse-shortcut keystroke="control button3" />
   </action>
   <action id="ReplaceInPath">
     <keyboard-shortcut first-keystroke="shift alt r" />
@@ -61,4 +69,5 @@
   <action id="RerunTests">
     <keyboard-shortcut first-keystroke="ctrl meta r" />
   </action>
+  <action id="UnselectPreviousOccurrence" />
 </keymap>

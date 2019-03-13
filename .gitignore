@@ -30,6 +30,8 @@ foo*
 /.mozilla/
 /.nmcli*
 /.password-store/
+/.pgAdmin*
+/.pgadmin*
 /.pgadmin3
 /.pgpass
 /.pki/
