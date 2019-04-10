@@ -70,11 +70,36 @@ get-docker-compose() {
     sudo chmod +x /usr/local/bin/docker-compose
 }
 
+# install erlang + rebar + redbug
 get-erlang() {
-    sudo apt-get update \
-	&& sudo apt-get install -y \
-		erlang-common-test erlang-eunit erlang-dialyzer \
-		erlang-mode erlang-parsetools erlang-dev
+    command -v make > /dev/null || err "install 'make'"
+    mkdir -p ~/git
+    local erlurl=https://raw.githubusercontent.com/massemanet/dockerfiles/master/erlang/includes
+    sudo true \
+        && curl https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb > \
+                /tmp/erlang-solutions_1.0_all.deb \
+        && sudo dpkg -i /tmp/erlang-solutions_1.0_all.deb \
+        && sudo apt-get update \
+        && sudo apt-get install -y \
+                erlang-common-test erlang-eunit erlang-dialyzer \
+                erlang-mode erlang-parsetools erlang-dev \
+        && curl https://s3.amazonaws.com/rebar3/rebar3 > /tmp/rebar3 \
+        && sudo cp /tmp/rebar3 /usr/bin/rebar3 \
+        && sudo chmod +x /usr/bin/rebar3 \
+        && cd ~/git \
+        && ( [ -d redbug ] || git clone https://github.com/massemanet/redbug ) \
+        && cd redbug \
+        && git checkout v2.0 \
+        && make \
+        && cd ~/git \
+        && ( [ -d distel ] || git clone https://github.com/massemanet/distel ) \
+        && cd distel \
+        && git checkout 2018 \
+        && make \
+        && mkdir -p ~/.emacs.d/masserlang \
+        && curl -fsSL "$erlurl/erlang" > ~/.erlang \
+        && curl -fsSL "$erlurl/user_default.erl" > ~/user_default.erl \
+        && curl -fsSL "$erlurl/masserlang.el" > ~/.emacs.d/masserlang/masserlang.el
 }
 
 get-java() {

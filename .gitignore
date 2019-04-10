@@ -3,6 +3,7 @@
 .\#*
 \#*
 foo*
+*.beam
 
 /.ICEauthority
 /.IdeaIC*/
@@ -19,6 +20,7 @@ foo*
 /.emacs.d/
 /.face*
 /.gnupg/
+/.gradle/
 /.gtkrc-*
 /.intellij/
 /.java/
@@ -38,11 +40,13 @@ foo*
 /.pulse-cookie
 /.python_history
 /.screenlayout/
+/.slack*
 /.ssh/
 /.steam/
 /.steampath
 /.steampid
 /.sudo_as_admin_successful
+/.terraform.d/
 /.uplink/
 /.xpra/
 /.xsession-errors

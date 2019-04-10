@@ -11,6 +11,7 @@ get_output() {
 xrandr --fb 7000x4000 \
        --output eDP-1 --scale 0.4x0.4 --pos 0x1200 \
        --output DP-1-1 --auto --rotate left --pos 1280x0 \
+       --output DP-1-2 --auto --pos 1280x840 \
        --output DP-1-2-8 --auto --pos 2360x840
 #       --output DP-1-1 --auto --rotate normal --pos 1280x720 \
 #       --output DP-1-2 --auto --rotate normal --pos 3200x720
