@@ -3,9 +3,10 @@
 sudo apt-get update && \
 sudo apt-get upgrade -y && \
 sudo apt-get install -y \
-     apt-transport-https \
+     apt-transport-https automake \
      curl deborphan emacs-lucid \
-     feh g++ git htop i3 jq libnotify-bin \
+     feh g++ git htop i3 jq \
+     libncurses-dev libnotify-bin libsctp-dev libwxgtk3.0-dev lksctp-tools \
      make mosh ncdu netcat-traditional nodm \
      pass powertop \
      qutebrowser \
