@@ -12,7 +12,7 @@
 (if (memq window-system '(mac ns x))
     (progn
       (unless (eq window-system 'x)
-	  (exec-path-from-shell-initialize))
+        (exec-path-from-shell-initialize))
       (load-theme 'gruvbox-dark-hard t)))
 
 ;; add legacy
@@ -67,9 +67,9 @@
   (window-resize (selected-window) (- 81 (window-width)) t))
 
 (defun blink-mode-line ()
-   "Blink the mode line."
-   (invert-face 'mode-line)
-   (run-with-timer 0.1 nil 'invert-face 'mode-line))
+  "Blink the mode line."
+  (invert-face 'mode-line)
+  (run-with-timer 0.1 nil 'invert-face 'mode-line))
 
 ;; configs
 (setq

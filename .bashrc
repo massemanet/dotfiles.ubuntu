@@ -70,6 +70,8 @@ djulia() { startcontainer "${FUNCNAME[0]}" "${1:-"bash"}" "${2:-"~/git"}"; }
 drust()  { startcontainer "${FUNCNAME[0]}" "${1:-"bash"}" "${2:-"~/git"}"; }
 dwg2()   { startcontainer "${FUNCNAME[0]}" "${1:-"bash"}" "${2:-"~/wg2"}"; }
 
+wg2-ssh() { ssh-agent bash -c "ssh-add ~/.ssh/id_rsa_wg2; $*"; }
+
 prompt_exit() {
     eval "$1='$?'; [ \$$1 == 0 ] && unset $1"
 }
