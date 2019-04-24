@@ -18,6 +18,7 @@ foo*
 /.config/
 /.docker/
 /.emacs.d/
+/.erlang
 /.face*
 /.gnupg/
 /.gradle/
@@ -54,9 +55,10 @@ foo*
 /Desktop/
 /Downloads/
 /coverage/
+/pgadmin.log
 /snap/
 /stale_outputs_checked
-/pgadmin.log
+/user_default.erl
 
 /git/
 /wg2/

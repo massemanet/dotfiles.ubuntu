@@ -4,11 +4,11 @@
 ;;; Code:
 
 (add-to-list 'load-path "/home/masse/git/distel/elisp")
-(add-to-list 'load-path "/home/masse/git/distel-completion/elisp")
+(add-to-list 'load-path "/opt/wrk/distel/elisp")
+(add-to-list 'load-path "/opt/wrk/distel-completion")
 
 (require 'align)
 (require 'erlang-start)
-(require 'flycheck-rebar3)
 (require 'company)
 (require 'company-distel)
 
@@ -30,26 +30,13 @@
       (quote ((erlang-indent-level . 4)
               (erlang-indent-level . 2))))
 
-(flycheck-rebar3-setup)
-(flycheck-define-checker erlang
-  "awesome erlang checker"
-  :command ("erlc"
-            "-o" temporary-directory
-            (option-list "-I" flycheck-erlang-include-path)
-            (option-list "-pa" flycheck-erlang-library-path)
-            "-Wall"
-            source)
-  :error-patterns
-  ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
-   (error line-start (file-name) ":" line ": " (message) line-end))
-  :modes erlang-mode
-  :predicate (lambda ()
-               (string-suffix-p ".erl" (buffer-file-name))))
-(setq flycheck-erlang-include-path '("../include"))
-(setq flycheck-erlang-library-path '("../_build/default/lib/*/ebin"))
-
 (defun my-erlang-mode-hook ()
-  "We want company mode."
+  "We want company mode and flycheck"
+  (setq
+   flycheck-erlang-include-path
+   (file-expand-wildcards (concat (flycheck-rebar3-project-root) "_build/*/lib/*/include"))
+   flycheck-erlang-library-path
+   (file-expand-wildcards (concat (flycheck-rebar3-project-root) "_build/*/lib/*/ebin")))
   (company-mode t))
 
 (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)

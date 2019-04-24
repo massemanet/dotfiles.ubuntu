@@ -18,7 +18,6 @@
 (depends-on "flycheck-demjsonlint")
 (depends-on "flycheck-elixir")
 (depends-on "flycheck-julia")
-(depends-on "flycheck-rebar3")
 (depends-on "flycheck-rust")
 (depends-on "flymake-easy")
 (depends-on "flymake-jshint")
