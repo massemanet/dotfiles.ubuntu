@@ -31,12 +31,14 @@
               (erlang-indent-level . 2))))
 
 (defun my-erlang-mode-hook ()
-  "We want company mode and flycheck"
+  "We want company mode and flycheck."
   (setq
    flycheck-erlang-include-path
-   (file-expand-wildcards (concat (flycheck-rebar3-project-root) "_build/*/lib/*/include"))
+   (file-expand-wildcards (concat (flycheck-rebar3-project-root)
+                                  "_build/*/lib/*/include"))
    flycheck-erlang-library-path
-   (file-expand-wildcards (concat (flycheck-rebar3-project-root) "_build/*/lib/*/ebin")))
+   (file-expand-wildcards (concat (flycheck-rebar3-project-root)
+                                  "_build/*/lib/*/ebin")))
   (company-mode t))
 
 (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
