@@ -7,6 +7,8 @@ I3_PID="$!"
 
 xset r rate 250 60
 
+gkrellm &
+
 xautolock \
     -time 10 \
     -notify 10 \

@@ -19,7 +19,9 @@ foo*
 /.docker/
 /.emacs.d/
 /.erlang
+/.erlang.cookie
 /.face*
+/.gkrellm2/
 /.gnupg/
 /.gradle/
 /.gtkrc-*
