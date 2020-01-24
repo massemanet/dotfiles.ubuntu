@@ -36,8 +36,8 @@ fi
 if [ "$TERM" != "dumb" ]; then
     # set a fancy prompt
     export PS1='\[\e[33m\]\h'
-    export PS1+='\[\e[34m\]${K8S:+[${K8S}]}'
     export PS1+='\[\e[36m\]${SSHID:+[${SSHID}]}'
+    export PS1+='\[\e[31m\]${K8S:+[${K8S}]}'
     export PS1+='\[\e[35m\]($(mygitdir):$(mygitbranch))'
     export PS1+='\[\e[32m\]${LX:+\[\e[31m\]($LX)}$'
     export PS1+='\[\e[0m\] '
