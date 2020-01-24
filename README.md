@@ -1,3 +1,3 @@
-# dotfiles.kubuntu
+# dotfiles.ubuntu
 
-kubuntu dotfiles! testing the Dell XPS13.
+ubuntu dotfiles. Vintage 2019.

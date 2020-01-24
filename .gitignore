@@ -5,6 +5,8 @@
 foo*
 *.beam
 
+/bin/bazel
+/_ssh/
 /.ICEauthority
 /.IdeaIC*/
 /.Xauthority
@@ -28,6 +30,7 @@ foo*
 /.intellij/
 /.java/
 /.kde/
+/.kube/
 /.lastpass/
 /.lesshst
 /.local/

@@ -30,6 +30,19 @@ get-awscli() {
         && sudo apt-get install -y awscli
 }
 
+get-bazelisk() {
+    local VSN="${1:-}"
+    local GH="https://github.com/bazelbuild/bazelisk/releases"
+    local RE="download/v[.0-9-]+/bazelisk-linux-amd64"
+    local r
+
+    r="$(curl -sSL "$GH" | grep -Eo "$RE" | grep "$VSN" | sort -Vu | tail -n1)"
+    echo "found file $r"
+    curl -sSL "$GH/$r" > /tmp/bazelisk
+    chmod +x /tmp/bazelisk
+    cp /tmp/bazelisk ~/bin/bazel
+}
+
 get-bazel() {
     local VSN="${1:-}"
     local GH="https://github.com/bazelbuild/bazel/releases"
@@ -53,7 +66,7 @@ get-docker() {
           stable"
     sudo apt-get update \
 	&& sudo apt-get install -y \
-		docker-ce docker-ce-cli containerd.io
+		docker.io
     sudo usermod -aG docker "$USER"
 }
 
@@ -78,7 +91,8 @@ get-erlang() {
     command -v autoconf > /dev/null || err "install 'autoconf'"
 
     sudo true
-
+    sudo apt-get install -y \
+	 libncurses-dev libsctp-dev libssl-dev libwxgtk3.0-dev
     [ -d ~/git/otp ] || git clone --depth=2 https://github.com/erlang/otp.git ~/git/otp
     cd ~/git/otp/
     git pull --depth=2
