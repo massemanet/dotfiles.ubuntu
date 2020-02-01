@@ -23,6 +23,7 @@ foo*
 /.erlang
 /.erlang.cookie
 /.face*
+/.fontconfig/
 /.gkrellm2/
 /.gnupg/
 /.gradle/
