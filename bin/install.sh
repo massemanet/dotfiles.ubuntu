@@ -62,11 +62,11 @@ get-docker() {
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     sudo add-apt-repository \
          "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-          $(lsb_release -cs) \
+          disco \
           stable"
     sudo apt-get update \
 	&& sudo apt-get install -y \
-		docker.io
+		docker-ce docker-ce-cli containerd.io
     sudo usermod -aG docker "$USER"
 }
 
@@ -85,7 +85,8 @@ get-docker-compose() {
 
 # install erlang + rebar + redbug
 get-erlang() {
-    echo "Remember, you must have libcurses, libsctp, and ssh header files."
+    local VSN="${1:-22}"
+
     command -v make > /dev/null || err "install 'make'"
     command -v automake > /dev/null || err "install 'automake'"
     command -v autoconf > /dev/null || err "install 'autoconf'"
@@ -93,7 +94,8 @@ get-erlang() {
     sudo true
     sudo apt-get install -y \
 	 libncurses-dev libsctp-dev libssl-dev libwxgtk3.0-dev
-    [ -d ~/git/otp ] || git clone --depth=2 https://github.com/erlang/otp.git ~/git/otp
+    [ -d ~/git/otp ] || git clone --depth=2 --branch "maint-$VSN" --single-branch \
+                            https://github.com/erlang/otp.git ~/git/otp
     cd ~/git/otp/
     git pull --depth=2
     ./otp_build autoconf
@@ -137,6 +139,8 @@ get-kubectl() {
     sudo mv /tmp/kubernetes.list /etc/apt/sources.list.d/kubernetes.list
     sudo apt-get update \
         && sudo apt-get install -y kubectl
+    kubectl completion bash > /tmp/kubectl_completion
+    sudo cp /tmp/kubectl_completion /etc/bash_completion.d
 }
 
 get-pgadmin() {

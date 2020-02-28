@@ -18,6 +18,8 @@ eval "$(dircolors)"
 
 . /etc/bash_completion
 
+export AWS_VAULT_BACKEND=kwallet
+
 # define some git helpers
 # shellcheck source=bin/gitfunctions
 [ -f ~/bin/gitfunctions ] && . ~/bin/gitfunctions
@@ -29,7 +31,7 @@ export EDITOR="emacsclient -ct -a ''"
 export GIT_PS1_SHOWSTASHSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWDIRTYSTATE=true
-export PROMPT_COMMAND='prompt_exit LX; prompt_title ; prompt_history ; prompt_sshid'
+export PROMPT_COMMAND='prompt_exit LX; prompt_history ; prompt_sshid'
 if [ -f ~/.kube/config ] && test "$(command -v kubectl)" ; then
     PROMPT_COMMAND+="; prompt_k8s"
 fi
@@ -37,7 +39,7 @@ if [ "$TERM" != "dumb" ]; then
     # set a fancy prompt
     export PS1='\[\e[33m\]\h'
     export PS1+='\[\e[36m\]${SSHID:+[${SSHID}]}'
-    export PS1+='\[\e[31m\]${K8S:+[${K8S}]}'
+    export PS1+='\[\e[31m\]${K8S:+{${K8S}}}'
     export PS1+='\[\e[35m\]($(mygitdir):$(mygitbranch))'
     export PS1+='\[\e[32m\]${LX:+\[\e[31m\]($LX)}$'
     export PS1+='\[\e[0m\] '
@@ -55,10 +57,6 @@ m()    { less "$@"; }
 
 prompt_exit() {
     eval "$1='$?'; [ \$$1 == 0 ] && unset $1"
-}
-
-prompt_title() {
-    [ "$TERM_PROGRAM" = "Apple_Terminal" ] && printf "\\e]1;%s\\a" "$(mygitdir)"
 }
 
 prompt_history() {

@@ -205,3 +205,4 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:height 85 :family "DejaVu Sans Mono")))))
+(put 'downcase-region 'disabled nil)

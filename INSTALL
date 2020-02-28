@@ -3,7 +3,7 @@
 sudo apt-get update && \
 sudo apt-get upgrade -y && \
 sudo apt-get install --autoremove -y \
-     automake curl deborphan emacs g++ git gnome-tweaks gopass htop jq lksctp-tools \
+     automake curl deborphan emacs g++ git gnome-tweaks gopass htop jq kwalletcli lksctp-tools \
      make mosh ncdu netcat-traditional pass powertop python qutebrowser shellcheck
 
 # snap is nice if it works
