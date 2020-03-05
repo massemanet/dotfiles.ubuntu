@@ -195,7 +195,7 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yaml-mode solarized-theme smart-mode-line rust-playground purescript-mode projectile pallet nyan-mode lsp-ui lsp-java kubernetes julia-repl julia-mode json-mode js2-mode highlight-parentheses gruvbox-theme go-mode flymake-rust flymake-jshint flycheck-rust flycheck-julia flycheck-elixir flycheck-demjsonlint exec-path-from-shell erlang eproject dockerfile-mode dap-mode company-lsp company-distel cargo)))
+    (bazel-mode yaml-mode solarized-theme smart-mode-line rust-playground purescript-mode projectile pallet nyan-mode lsp-ui lsp-java kubernetes julia-repl julia-mode json-mode js2-mode highlight-parentheses gruvbox-theme go-mode flymake-rust flymake-jshint flycheck-rust flycheck-julia flycheck-elixir flycheck-demjsonlint exec-path-from-shell erlang eproject dockerfile-mode dap-mode company-lsp company-distel cargo)))
  '(term-default-bg-color nil)
  '(term-default-fg-color nil))
 
