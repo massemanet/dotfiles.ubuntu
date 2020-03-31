@@ -17,6 +17,8 @@ shopt -s checkwinsize
 eval "$(dircolors)"
 
 . /etc/bash_completion
+# shellcheck disable=SC1090
+. <(kubectl completion bash)
 
 export AWS_VAULT_BACKEND=kwallet
 
