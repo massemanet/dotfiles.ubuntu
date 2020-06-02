@@ -196,7 +196,7 @@ Repeated invocations toggle between the two most recently open buffers."
  '(custom-enabled-themes (quote (gruvbox-light-hard)))
  '(custom-safe-themes
    (quote
-    ("b583823b9ee1573074e7cbfd63623fe844030d911e9279a7c8a5d16de7df0ed0" default)))
+    ("a06658a45f043cd95549d6845454ad1c1d6e24a99271676ae56157619952394a" "b583823b9ee1573074e7cbfd63623fe844030d911e9279a7c8a5d16de7df0ed0" default)))
  '(edts-man-root "/home/masse/.emacs.d/edts/doc/22.3")
  '(package-selected-packages
    (quote
