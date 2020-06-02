@@ -93,7 +93,7 @@ get-erlang() {
 
     sudo true
     sudo apt-get install -y \
-	 libncurses-dev libsctp-dev libssl-dev libwxgtk3.0-dev
+	 libncurses-dev libsctp-dev libssl-dev libwxgtk3.0-gtk3-dev
     [ -d ~/git/otp ] || git clone --depth=2 --branch "maint-$VSN" --single-branch \
                             https://github.com/erlang/otp.git ~/git/otp
     cd ~/git/otp/
