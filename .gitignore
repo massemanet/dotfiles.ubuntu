@@ -4,8 +4,10 @@
 \#*
 foo*
 *.beam
+jmeter.log
 
 /bin/bazel
+/bin/kubectl-*
 /_ssh/
 /.ICEauthority
 /.IdeaIC*/
@@ -25,12 +27,14 @@ foo*
 /.face*
 /.fontconfig/
 /.gkrellm2/
+/.gnome/
 /.gnupg/
 /.gradle/
 /.gtkrc-*
 /.intellij/
 /.java/
 /.kde/
+/.krew/
 /.kube/
 /.lastpass/
 /.lesshst
@@ -63,6 +67,7 @@ foo*
 
 /Desktop/
 /Downloads/
+/Pictures/
 /coverage/
 /pgadmin.log
 /snap/

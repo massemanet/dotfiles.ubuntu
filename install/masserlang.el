@@ -24,6 +24,7 @@
 
 (defun my-erlang-mode-hook ()
   "We want company mode and flycheck."
+  (add-hook 'erlang-mode-hook '(lambda () (require 'edts-start)))
   (setq
    flycheck-erlang-include-path (append
                                  (file-expand-wildcards

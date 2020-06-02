@@ -15,6 +15,7 @@ find "$d" \
      -path "*/.git"    -prune -o \
      -path "*/.eunit"  -prune -o \
      -path "*/.deps"   -prune -o \
+     -path "*/_build"  -prune -o \
      -path "*/#*"      -prune -o \
      -path "*~"        -prune -o \
      -path "*/bazel-*" -prune -o \

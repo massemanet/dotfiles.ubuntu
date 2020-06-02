@@ -110,7 +110,6 @@ get-erlang() {
     cd ~/git
     ( [ -d redbug ] || git clone https://github.com/massemanet/redbug )
     cd redbug
-    git checkout v2.0
     make
 
     cd ~/git

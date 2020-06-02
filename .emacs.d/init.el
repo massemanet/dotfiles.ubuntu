@@ -193,9 +193,14 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (gruvbox-light-hard)))
+ '(custom-safe-themes
+   (quote
+    ("b583823b9ee1573074e7cbfd63623fe844030d911e9279a7c8a5d16de7df0ed0" default)))
+ '(edts-man-root "/home/masse/.emacs.d/edts/doc/22.3")
  '(package-selected-packages
    (quote
-    (bazel-mode yaml-mode solarized-theme smart-mode-line rust-playground purescript-mode projectile pallet nyan-mode lsp-ui lsp-java kubernetes julia-repl julia-mode json-mode js2-mode highlight-parentheses gruvbox-theme go-mode flymake-rust flymake-jshint flycheck-rust flycheck-julia flycheck-elixir flycheck-demjsonlint exec-path-from-shell erlang eproject dockerfile-mode dap-mode company-lsp company-distel cargo)))
+    (edts bazel-mode yaml-mode solarized-theme smart-mode-line rust-playground purescript-mode pallet nyan-mode lsp-java kubernetes julia-repl julia-mode json-mode js2-mode highlight-parentheses gruvbox-theme go-mode flymake-rust flymake-jshint flycheck-rust flycheck-julia flycheck-elixir flycheck-demjsonlint exec-path-from-shell erlang dockerfile-mode dap-mode cargo)))
  '(term-default-bg-color nil)
  '(term-default-fg-color nil))
 

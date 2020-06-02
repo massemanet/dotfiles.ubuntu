@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+CTX="$(kubectl config get-contexts | cut -c11- | awk '{print $1}' | grep "$1")"
+if [ "$(echo "$CTX" | wc -l)" != 1 ] || [ "$CTX" = "" ]; then
+    echo "bad context: $CTX" && exit 3
+fi
+kubectl config use-context "$CTX"
+
+if kubectl get namespaces | awk '{print $1}' | grep -qE "^${2}$"; then
+    kubectl config set-context --current --namespace="$2"
+else
+    echo "No such namespace: $2"
+fi
