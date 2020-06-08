@@ -85,7 +85,7 @@ get-docker-compose() {
 
 # install erlang + rebar + redbug
 get-erlang() {
-    local VSN="${1:-22}"
+    local VSN="${1:-23}"
 
     command -v make > /dev/null || err "install 'make'"
     command -v automake > /dev/null || err "install 'automake'"
@@ -93,7 +93,7 @@ get-erlang() {
 
     sudo true
     sudo apt-get install -y \
-	 libncurses-dev libsctp-dev libssl-dev libwxgtk3.0-gtk3-dev
+	 libncurses-dev libpcap-dev libsctp-dev libssl-dev libwxgtk3.0-gtk3-dev
     [ -d ~/git/otp ] || git clone --depth=2 --branch "maint-$VSN" --single-branch \
                             https://github.com/erlang/otp.git ~/git/otp
     cd ~/git/otp/
@@ -103,6 +103,14 @@ get-erlang() {
     make
     sudo make install
 
+    mkdir -p ~/.emacs.d/masserlang \
+        && rm -f ~/.emacs.d/masserlang/masserlang.el \
+        && ln -s ~/install/masserlang.el ~/.emacs.d/masserlang
+    rm -f ~/.erlang \
+        && ln -s ~/install/erlang ~/.erlang
+    rm -f ~/user_default.erl \
+        && ln -s ~/install/user_default.erl ~
+
     curl https://s3.amazonaws.com/rebar3/rebar3 > /tmp/rebar3
     sudo cp /tmp/rebar3 /usr/local/bin/rebar3
     sudo chmod +x /usr/local/bin/rebar3
@@ -110,12 +118,6 @@ get-erlang() {
     cd ~/git
     ( [ -d redbug ] || git clone https://github.com/massemanet/redbug )
     cd redbug
-    make
-
-    cd ~/git
-    ( [ -d distel ] || git clone https://github.com/massemanet/distel )
-    cd distel
-    git checkout 2018
     make
 }
 

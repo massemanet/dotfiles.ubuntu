@@ -3,8 +3,9 @@
 sudo apt-get update && \
 sudo apt-get upgrade -y && \
 sudo apt-get install --autoremove -y \
-     automake chromium-browser curl deborphan emacs g++ git gnome-tweaks gopass htop jq kwalletcli lksctp-tools \
-     make mosh ncdu netcat-traditional pass powertop python shellcheck
+     automake chromium-browser curl deborphan emacs g++ git gnome-tweaks \
+     gopass htop jq kwalletcli lksctp-tools make mosh ncdu netcat-traditional \
+     pass pavucontrol-qt powertop python-is-python3 shellcheck
 
 # snap is nice if it works
 # the docker snap is sadly broken
@@ -23,12 +24,14 @@ sudo apt-get install --autoremove -y \
 
 ~/bin/install.sh aws-vault
 ~/bin/install.sh awscli
+~/bin/install.sh bazel
 ~/bin/install.sh bazelisk
 ~/bin/install.sh docker
-~/bin/install.sh docker-compose
 ~/bin/install.sh erlang
-~/bin/install.sh java
 ~/bin/install.sh keybase
+~/bin/install.sh wireshark
+~/bin/install.sh docker-compose
+~/bin/install.sh java
 ~/bin/install.sh pgadmin
 ~/bin/install.sh python
 
