@@ -70,6 +70,23 @@ get-docker() {
     sudo usermod -aG docker "$USER"
 }
 
+get-grpcurl() {
+    local VSN="${1:-}"
+    local ITEM=grpcurl
+    local DLPAGE="https://github.com/fullstorydev/$ITEM/releases"
+    local RE="download/v[0-9\\.]+/${ITEM}_[0-9\\.]+_linux_x86_64.tar.gz"
+    local r TMP
+
+    sudo true
+    r="$(curl -sL "$DLPAGE" | grep -oE "$RE" | grep "$VSN" | sort -uV | tail -n1)"
+    [ -z "$r" ] && err "no file at $DLPAGE."
+    echo "found file: $r"
+    TMP="$(mktemp)"
+    curl -sL "$DLPAGE/$r" -o "$TMP"
+    sudo tar -xz -C /usr/local/bin --no-same-owner -f "$TMP" "$ITEM"
+    sudo chmod +x /usr/local/bin/"$ITEM"
+}
+
 get-docker-compose() {
     local r
     local VSN="${1:-}"
