@@ -100,6 +100,21 @@ get-docker-compose() {
     sudo chmod +x /usr/local/bin/docker-compose
 }
 
+get-gopass() {
+    local r TMP
+    local VSN="${1:-}"
+    local DLPAGE="https://github.com/gopasspw/gopass/releases"
+    local RE="download/v[0-9\\.]+/gopass-[0-9\\.]+-linux-amd64.tar.gz"
+
+    TMP="$(mktemp)"
+    r="$(curl -sL "$DLPAGE" | grep -oE "$RE" | grep "$VSN" | sort -uV | tail -n1)"
+    [ -z "$r" ] && err "no file at $DLPAGE."
+    echo "found file: $r"
+    curl -sL "$DLPAGE/$r" -o "$TMP"
+    sudo tar -xz -C /usr/local/bin --no-same-owner -f "$TMP" gopass
+    sudo chmod +x /usr/local/bin/gopass
+}
+
 # install erlang + rebar + redbug
 get-erlang() {
     local VSN="${1:-23}"
