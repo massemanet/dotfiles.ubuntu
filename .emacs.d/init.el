@@ -199,7 +199,7 @@ Repeated invocations toggle between the two most recently open buffers."
     ("c433c87bd4b64b8ba9890e8ed64597ea0f8eb0396f4c9a9e01bd20a04d15d358" default)))
  '(package-selected-packages
    (quote
-    (bazel-mode yaml-mode solarized-theme smart-mode-line rust-playground purescript-mode projectile pallet nyan-mode lsp-ui lsp-java kubernetes julia-repl julia-mode json-mode js2-mode highlight-parentheses gruvbox-theme go-mode flymake-rust flymake-jshint flycheck-rust flycheck-julia flycheck-elixir flycheck-demjsonlint exec-path-from-shell erlang eproject dockerfile-mode dap-mode company-lsp company-distel cargo)))
+    (edts yaml-mode solarized-theme smart-mode-line rust-playground purescript-mode projectile pallet nyan-mode kubernetes julia-repl julia-mode json-mode js2-mode highlight-parentheses gruvbox-theme go-mode flymake-rust flymake-jshint flycheck-rust flycheck-julia flycheck-elixir flycheck-demjsonlint exec-path-from-shell erlang eproject dockerfile-mode dap-mode cargo bazel-mode)))
  '(pdf-view-midnight-colors (quote ("#fdf4c1" . "#1d2021")))
  '(term-default-bg-color nil)
  '(term-default-fg-color nil))
