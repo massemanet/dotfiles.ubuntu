@@ -79,9 +79,9 @@ prompt_sshid() {
 }
 
 ## history
-# lots of history
-export HISTSIZE=9999
-export HISTFILESIZE=$HISTSIZE
+# unlimited history
+export HISTSIZE=
+export HISTFILESIZE=
 
 # agglomerate history from multiple shells
 export HISTCONTROL="ignoredups"

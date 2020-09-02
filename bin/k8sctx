@@ -7,6 +7,7 @@ if [ "$(echo "$CTX" | wc -l)" != 1 ] || [ "$CTX" = "" ]; then
 fi
 kubectl config use-context "$CTX"
 
+[ -z "${2-}" ] && exit 0
 if kubectl get namespaces | awk '{print $1}' | grep -qE "^${2}$"; then
     kubectl config set-context --current --namespace="$2"
 else

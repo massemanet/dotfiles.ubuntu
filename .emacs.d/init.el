@@ -1,19 +1,12 @@
 ;;; -*- mode: lisp -*-
 
 ;;; package handling
-(package-initialize)
 (require 'cask (car (sort (file-expand-wildcards
                            "~/.emacs.d/.cask/*/elpa/cask-*/cask.el")
                           'string>)))
 (cask-initialize)
 (require 'pallet)
 (pallet-mode t)
-
-(if (memq window-system '(mac ns x))
-    (progn
-      (unless (eq window-system 'x)
-        (exec-path-from-shell-initialize))
-      (load-theme 'gruvbox-dark-hard t)))
 
 ;; add legacy
 (add-to-list 'load-path "~/.emacs.d/fdlcap")
@@ -176,7 +169,7 @@ Repeated invocations toggle between the two most recently open buffers."
         (setq flyspell-dictionaries (quote ("american" "svenska"))))))
 
 (defun align-regexp-buffer (regexp)
-  "Align current buffer with regexp."
+  "Align current buffer with REGEXP."
   (interactive (list (concat "\\(\\s-*\\)" (read-string "Align regexp: "))))
   (align-regexp (point-min) (point-max) regexp 1 nil t))
 
@@ -193,14 +186,12 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (solarized-light)))
+ '(custom-enabled-themes '(solarized-light))
  '(custom-safe-themes
-   (quote
-    ("c433c87bd4b64b8ba9890e8ed64597ea0f8eb0396f4c9a9e01bd20a04d15d358" default)))
+   '("a06658a45f043cd95549d6845454ad1c1d6e24a99271676ae56157619952394a" "c433c87bd4b64b8ba9890e8ed64597ea0f8eb0396f4c9a9e01bd20a04d15d358" default))
  '(package-selected-packages
-   (quote
-    (edts yaml-mode solarized-theme smart-mode-line rust-playground purescript-mode projectile pallet nyan-mode kubernetes julia-repl julia-mode json-mode js2-mode highlight-parentheses gruvbox-theme go-mode flymake-rust flymake-jshint flycheck-rust flycheck-julia flycheck-elixir flycheck-demjsonlint exec-path-from-shell erlang eproject dockerfile-mode dap-mode cargo bazel-mode)))
- '(pdf-view-midnight-colors (quote ("#fdf4c1" . "#1d2021")))
+   '(edts yaml-mode solarized-theme smart-mode-line rust-playground purescript-mode projectile pallet nyan-mode kubernetes julia-repl julia-mode json-mode js2-mode highlight-parentheses gruvbox-theme go-mode flymake-rust flymake-jshint flycheck-rust flycheck-julia flycheck-elixir flycheck-demjsonlint exec-path-from-shell erlang eproject dockerfile-mode dap-mode cargo bazel-mode))
+ '(pdf-view-midnight-colors '("#fdf4c1" . "#1d2021"))
  '(term-default-bg-color nil)
  '(term-default-fg-color nil))
 

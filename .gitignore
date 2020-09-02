@@ -21,6 +21,7 @@ jmeter.log
 /.cask/
 /.config/
 /.docker/
+/.dbus/
 /.emacs.d/
 /.erlang
 /.erlang.cookie
@@ -42,6 +43,7 @@ jmeter.log
 /.localbashrc
 /.mozilla/
 /.nmcli*
+/.nv/
 /.pam_environment
 /.password-store/
 /.pgAdmin*
