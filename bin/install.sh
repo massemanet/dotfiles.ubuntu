@@ -26,8 +26,8 @@ get-aws-vault() {
 }
 
 get-awscli() {
-    sudo apt-get update \
-        && sudo apt-get install -y awscli
+    sudo apt-get update
+    sudo apt-get install -y awscli
 }
 
 get-bazelisk() {
@@ -58,15 +58,24 @@ get-bazel() {
     sudo ln -s /usr/local/lib/bazel/bin/bazel-complete.bash /etc/bash_completion.d
 }
 
+get-chromium() {
+    echo 'deb http://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/ /' | \
+        sudo tee /etc/apt/sources.list.d/home-ungoogled_chromium.list > /dev/null
+    curl -s 'https://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/Release.key' | \
+        gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home-ungoogled_chromium.gpg > /dev/null
+    sudo apt update
+    sudo apt install -y ungoogled-chromium
+}
+
 get-docker() {
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     sudo add-apt-repository \
          "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
           disco \
           stable"
-    sudo apt-get update \
-	&& sudo apt-get install -y \
-		docker-ce docker-ce-cli containerd.io
+    sudo apt-get update
+    sudo apt-get install -y \
+         docker-ce docker-ce-cli containerd.io
     sudo usermod -aG docker "$USER"
 }
 
@@ -115,6 +124,19 @@ get-gopass() {
     sudo chmod +x /usr/local/bin/gopass
 }
 
+# emacs for wayland
+get-emacs() {
+    cd /tmp
+    git clone --depth=2 --single-branch https://github.com/masm11/emacs
+    cd emacs/
+    ./autogen.sh
+    sudo apt install -y --auto-remove \
+         libcairo2-dev libgtk-3-dev libgnutls28-dev
+    ./configure --with-pgtk --with-cairo --with-modules --without-makeinfo
+    sudo make install
+    (cd ~/.emacs.d && ~/.cask/bin/cask install)
+}
+
 # install erlang + rebar + redbug
 get-erlang() {
     local VSN="${1:-23}"
@@ -125,7 +147,7 @@ get-erlang() {
 
     sudo true
     sudo apt-get install -y \
-	 libncurses-dev libpcap-dev libsctp-dev libssl-dev libwxgtk3.0-gtk3-dev
+         libncurses-dev libpcap-dev libsctp-dev libssl-dev libwxgtk3.0-gtk3-dev
     [ -d ~/git/otp ] || git clone --depth=2 --branch "maint-$VSN" --single-branch \
                             https://github.com/erlang/otp.git ~/git/otp
     cd ~/git/otp/
@@ -153,10 +175,14 @@ get-erlang() {
     make
 }
 
+get-intellij() {
+    sudo snap install intellij-idea-community --classic
+}
+
 get-java() {
     sudo apt-get update \
-	&& sudo apt-get install -y \
-		openjdk-8-jdk-headless openjdk-11-jdk-headless openssh-server
+        && sudo apt-get install -y \
+                openjdk-8-jdk-headless openjdk-11-jdk-headless openssh-server
     sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
 }
 
@@ -167,6 +193,7 @@ get-keybase() {
 }
 
 get-kubectl() {
+    # snap install kubectl --classic
     curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
     echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" > /tmp/kubernetes.list
     sudo mv /tmp/kubernetes.list /etc/apt/sources.list.d/kubernetes.list
@@ -178,19 +205,19 @@ get-kubectl() {
 
 get-pgadmin() {
     sudo apt-get update \
-	&& sudo apt-get install -y pgadmin3
+        && sudo apt-get install -y pgadmin3
 }
 
 get-python() {
     sudo apt-get update \
-	&& sudo apt-get install -y python2 python3 \
-	&& sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1 \
-	&& sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
+        && sudo apt-get install -y python2 python3 \
+        && sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1 \
+        && sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
 }
 
 get-wireshark() {
     sudo apt-get update \
-	&& sudo apt-get install -y tshark wireshark
+        && sudo apt-get install -y tshark wireshark
     sudo usermod -aG wireshark "$USER"
 }
 

@@ -189,7 +189,7 @@ Repeated invocations toggle between the two most recently open buffers."
  '(custom-safe-themes
    '("a06658a45f043cd95549d6845454ad1c1d6e24a99271676ae56157619952394a" "c433c87bd4b64b8ba9890e8ed64597ea0f8eb0396f4c9a9e01bd20a04d15d358" default))
  '(package-selected-packages
-   '(edts yaml-mode solarized-theme smart-mode-line projectile pallet nyan-mode kubernetes highlight-parentheses gruvbox-theme go-mode flymake-rust flymake-jslint flycheck-rust exec-path-from-shell erlang dockerfile-mode dap-mode cargo bazel-mode))
+   '(flycheck-kotlin kotlin-mode edts yaml-mode solarized-theme smart-mode-line projectile pallet nyan-mode kubernetes highlight-parentheses gruvbox-theme go-mode flymake-rust flymake-jslint flycheck-rust exec-path-from-shell erlang dockerfile-mode dap-mode cargo bazel-mode))
  '(pdf-view-midnight-colors '("#fdf4c1" . "#1d2021"))
  '(term-default-bg-color nil)
  '(term-default-fg-color nil))

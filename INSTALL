@@ -3,31 +3,31 @@
 sudo apt-get update && \
 sudo apt-get upgrade -y && \
 sudo apt-get install --autoremove -y \
-     automake chromium-browser curl deborphan emacs g++ git gnome-tweaks \
-     gopass htop jq kwalletcli lksctp-tools make mosh ncdu netcat-traditional \
+     automake curl deborphan feh g++ git gnome-tweaks gopass \
+     htop jq kwalletcli lksctp-tools make mosh ncdu netcat-traditional \
      pass pavucontrol-qt powertop python-is-python3 shellcheck
 
 # snap is nice if it works
-# the docker snap is sadly broken
-# sudo snap install chromium firefox opera spotify
-# sudo snap install intellij-idea-community --classic
+sudo snap install spotify
 
 # get my stuff
 [ ! -e ~/.git ] &&
     cd /tmp && \
-	rm -rf dotfiles.ubuntu && \
-	git clone https://github.com/massemanet/dotfiles.ubuntu && \
-	cd dotfiles.ubuntu && \
-	git remote set-url origin git@github.com:massemanet/dotfiles.ubuntu && \
-	mv /tmp/dotfiles.ubuntu/.git ~ && \
-	(cd && git reset --hard)
+        rm -rf dotfiles.ubuntu && \
+        git clone https://github.com/massemanet/dotfiles.ubuntu && \
+        cd dotfiles.ubuntu && \
+        git remote set-url origin git@github.com:massemanet/dotfiles.ubuntu && \
+        mv /tmp/dotfiles.ubuntu/.git ~ && \
+        (cd && git reset --hard)
 
 ~/bin/install.sh aws-vault
 ~/bin/install.sh awscli
 ~/bin/install.sh bazel
 ~/bin/install.sh bazelisk
+~/bin/install.sh chromium
 ~/bin/install.sh docker
 ~/bin/install.sh erlang
+~/bin/install.sh emacs
 ~/bin/install.sh keybase
 ~/bin/install.sh wireshark
 ~/bin/install.sh docker-compose
