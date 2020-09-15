@@ -79,6 +79,10 @@ get-docker() {
     sudo usermod -aG docker "$USER"
 }
 
+get-go() {
+    sudo snap install go --classic
+}
+
 get-grpcurl() {
     local VSN="${1:-}"
     local ITEM=grpcurl
@@ -192,6 +196,22 @@ get-keybase() {
     sudo apt-get install -yf
 }
 
+get-kotlin() {
+    local r
+    local VSN="${1:-}"
+    local DLPAGE="https://github.com/JetBrains/kotlin/releases"
+    local RE="download/v[0-9\\.]+/kotlin-native-linux-[0-9\\.]+.tar.gz"
+    local TMP=/tmp/kt.tgz
+
+    r="$(curl -sL "$DLPAGE/latest" | grep -oE "$RE" | grep "$VSN" | sort -uV | tail -n1)"
+    [ -z "$r" ] && err "no file at $DLPAGE."
+    echo "found file: $r"
+    curl -sL "$DLPAGE/$r" -o "$TMP"
+    sudo rm -rf /opt/kotlin \
+        && sudo mkdir /opt/kotlin \
+        && sudo tar -xz -C /opt/kotlin --strip-components=1 --no-same-owner -f "$TMP"
+}
+
 get-kubectl() {
     # snap install kubectl --classic
     curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
@@ -226,6 +246,11 @@ get-pgadmin() {
     sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
     sudo apt-get update \
          && sudo apt-get install -y pgadmin4
+}
+
+get-rust() {
+    sudo snap install rustup --classic
+    rustup toolchain install stable
 }
 
 sudo true

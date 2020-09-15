@@ -35,6 +35,7 @@ jmeter.log
 /.intellij/
 /.java/
 /.kde/
+/.konan/
 /.krew/
 /.kube/
 /.lastpass/
@@ -66,6 +67,7 @@ jmeter.log
 /.xinputrc
 /.xpra/
 /.xsession-errors
+/*.png
 
 /Desktop/
 /Downloads/

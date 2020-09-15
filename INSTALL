@@ -29,6 +29,7 @@ sudo snap install spotify
 ~/bin/install.sh erlang
 ~/bin/install.sh emacs
 ~/bin/install.sh keybase
+~/bin/install.sh kubectl
 ~/bin/install.sh wireshark
 ~/bin/install.sh docker-compose
 ~/bin/install.sh java
