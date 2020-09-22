@@ -65,6 +65,16 @@ get-chromium() {
         gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home-ungoogled_chromium.gpg > /dev/null
     sudo apt update
     sudo apt install -y ungoogled-chromium
+
+    local GH="https://github.com/gorhill/uBlock/releases"
+    local RE="download/[0-9\\.]+/uBlock0_[0-9\\.]+.chromium.zip"
+    local r
+    r="$(curl -sSL "$GH" | grep -Eo "$RE" | grep "$VSN" | sort -Vu | tail -n1)"
+    echo "found file $r"
+    curl -sSL "$GH/$r" > /tmp/ublock.zip
+    unzip -d ~/.local /tmp/ublock.zip
+    mv ~/.local/uBlock0.chromium ~/.local/ublock
+    echo "Add the extension in chromium; 'More Tools => Extensions' = ~/.local/ublock"
 }
 
 get-docker() {

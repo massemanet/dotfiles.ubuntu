@@ -1,3 +1,3 @@
-common --announce_rc --repository_cache=/tmp/repo_cache --experimental_repository_cache_hardlinks
-build --disk_cache=/tmp/disk_cache
-fetch --disk_cache=/tmp/disk_cache
+common --announce_rc --repository_cache=~/.cache/bazel/remote_cache --experimental_repository_cache_hardlinks
+build --disk_cache=~/.cache/bazel/remote_cache
+fetch --disk_cache=~/.cache/bazel/remote_cache
