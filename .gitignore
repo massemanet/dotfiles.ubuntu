@@ -4,7 +4,7 @@
 \#*
 foo*
 *.beam
-jmeter.log
+/specs
 
 /bin/bazel
 /bin/kubectl-*
