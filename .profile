@@ -15,3 +15,5 @@ if [ -z "$L" ]; then
 else
     export LANG="$L"
 fi
+
+eval "$(ssh-agent -s)"

@@ -75,7 +75,7 @@ prompt_k8s() {
 }
 
 prompt_sshid() {
-    SSHID="$(sshid)"
+    SSHID="$(~/bin/sshid)"
 }
 
 ## history

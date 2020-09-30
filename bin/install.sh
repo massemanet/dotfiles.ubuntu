@@ -223,7 +223,6 @@ get-kotlin() {
 }
 
 get-kubectl() {
-    # snap install kubectl --classic
     curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
     echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" > /tmp/kubernetes.list
     sudo mv /tmp/kubernetes.list /etc/apt/sources.list.d/kubernetes.list
@@ -261,6 +260,12 @@ get-pgadmin() {
 get-rust() {
     sudo snap install rustup --classic
     rustup toolchain install stable
+}
+
+get-sway(){
+    sudo apt-get update \
+         && sudo apt install -y \
+                 sway swaylock swayidle waybar slurp grim wl-clipboard fzf
 }
 
 sudo true
