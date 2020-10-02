@@ -11,6 +11,10 @@ set $term /usr/bin/gnome-terminal
 # launcher
 set $launcher "bash -c 'compgen -c | sort -u | rofi -dmenu | xargs -r swaymsg -t command exec'"
 
+for_window [class="Spotify"] floating enable
+for_window [class="Chromium"] floating enable
+for_window [class="Firefox"] floating enable
+
 ### Idle configuration
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
@@ -136,7 +140,6 @@ bindsym $mod+Shift+q kill
 
 # start your launcher
 bindsym $mod+d exec $launcher
-for_window [app_id="^launcher$"] floating enable, border none
 
 bindsym $mod+v splitv
 bindsym $mod+h splith
