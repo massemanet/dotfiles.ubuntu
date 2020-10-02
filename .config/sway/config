@@ -8,6 +8,9 @@ set $mod Mod4
 # Your preferred terminal emulator
 set $term /usr/bin/gnome-terminal
 
+# alttab
+set $alttab $HOME/bin/alttab.sh
+
 # launcher
 set $launcher "bash -c 'compgen -c | sort -u | rofi -dmenu | xargs -r swaymsg -t command exec'"
 
@@ -131,6 +134,7 @@ bindsym $mod+j focus left
 bindsym $mod+k focus up
 bindsym $mod+l focus down
 bindsym $mod+semicolon focus right
+bindsym $mod+shift+tab exec $alttab
 
 # start a terminal
 bindsym $mod+Return exec $term
@@ -159,6 +163,7 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
 
 # Workspaces:
 bindsym $mod+tab workspace back_and_forth
+
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
