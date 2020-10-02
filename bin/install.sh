@@ -265,7 +265,7 @@ get-rust() {
 get-sway(){
     sudo apt-get update \
          && sudo apt install -y \
-                 sway swaylock swayidle waybar slurp grim wl-clipboard fzf
+                 sway swaylock swayidle waybar slurp grim wl-clipboard fzf rofi
 }
 
 sudo true

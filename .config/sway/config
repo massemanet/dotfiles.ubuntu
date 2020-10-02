@@ -1,0 +1,180 @@
+# Read `man 5 sway` for a complete reference.
+
+### Variables
+
+# Logo key. Use Mod1 for Alt. Mod4 is Windows.
+set $mod Mod4
+
+# Your preferred terminal emulator
+set $term /usr/bin/gnome-terminal
+
+# launcher
+set $launcher "bash -c 'compgen -c | sort -u | rofi -dmenu | xargs -r swaymsg -t command exec'"
+
+### Idle configuration
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+set $locker 'swaylock -i hexdump.png -f -c 000000 --ignore-empty-password'
+exec swayidle -w \
+         timeout 300 $locker \
+         timeout 600 'swaymsg "output * dpms off"' \
+           resume 'swaymsg "output * dpms on"' \
+         before-sleep $locker \
+         after-resume 'swaymsg "output * enable"'
+
+### Input configuration
+input type:keyboard {
+  xkb_layout us,se
+  xkb_options ctrl:nocaps,grp:shifts_toggle
+}
+
+input "3727:32:GASIA_PS2toUSB_Adapter_Consumer_Control" {
+  xkb_layout us,se
+  xkb_options ctrl:nocaps,grp:shifts_toggle
+  repeat_delay 400
+  repeat_rate 40
+}
+
+input "1739:0:Synaptics_TM3289-002" {
+  natural_scroll enabled
+  tap enabled
+  tap_button_map lmr
+}
+
+input "1739:30383:DLL075B:01_06CB:76AF_Touchpad" {
+  natural_scroll enabled
+  tap enabled
+  tap_button_map lmr
+}
+
+input "1241:17733:USB_Keyboard" {
+  xkb_layout us,se
+  xkb_options ctrl:nocaps,grp:shifts_toggle
+  repeat_delay 400
+  repeat_rate 40
+}
+
+input "1:1:AT_Translated_Set_2_keyboard" {
+  xkb_layout us,se
+  xkb_options ctrl:nocaps,grp:shifts_toggle
+  repeat_delay 400
+  repeat_rate 40
+}
+
+### output config
+#  Current mode: 3840x2160 @ 60.000000 Hz
+output 'Unknown 0xA029 0x00000000' {
+  pos 0 1020
+  scale 2
+}
+
+#  Current mode: 1920x1080 @ 60.049000 Hz
+output 'Unknown 0x313D 0x00000000' {
+  pos 0 840
+}
+
+#  Current mode: 3200x1800 @ 60.000000 Hz
+output 'Sharp Corporation 0x144A 0x00000000' {
+  pos 320 1020
+  scale 2
+}
+
+#  Current mode: 1920x1080 @ 60.000000 Hz
+output 'Dell Inc. DELL U2417H 5K9YD881CLTL' {
+  pos 3000 0
+  transform 90
+}
+
+#  Current mode: 1920x1080 @ 60.000000 Hz
+output 'Dell Inc. DELL U2417H 5K9YD881CM9L' {
+  pos 1920 0
+  transform 270
+
+}
+
+#
+# Status Bar:
+
+bar {
+    position bottom
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command while sleep 1; do $HOME/bin/status.sh; done
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
+
+### lid switch
+# turn off internal screen when lid is closed
+
+bindswitch lid:on output eDP-1 disable
+bindswitch lid:off output eDP-1 enable
+
+### Key bindings
+#
+# Basics:
+#
+# focus
+bindsym $mod+j focus left
+bindsym $mod+k focus up
+bindsym $mod+l focus down
+bindsym $mod+semicolon focus right
+
+# start a terminal
+bindsym $mod+Return exec $term
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start your launcher
+bindsym $mod+d exec $launcher
+for_window [app_id="^launcher$"] floating enable, border none
+
+bindsym $mod+v splitv
+bindsym $mod+h splith
+
+# sound
+bindsym $mod+shift+v exec pavucontrol-qt
+for_window [app_id="pavucontrol-qt"] floating enable, resize set width 1000 px height 400 px
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# lock screen
+bindsym $mod+Shift+z exec $locker
+
+# exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+# Workspaces:
+bindsym $mod+tab workspace back_and_forth
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
