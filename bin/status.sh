@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+_spotify(){
+    local N
+    N="$(swaymsg -t get_tree | jq -r 'recurse(.nodes[]?)|recurse(.floating_nodes[]?)|select(.window_properties.class=="Spotify").name')"
+    [ "$N" == "Spotify Premium" ] || echo "$N"
+}
+
 _bat() {
     local STATUS CAPACITY ENERGY POWER
     STATUS="$(cat /sys/class/power_supply/BAT0/status)"
@@ -29,4 +35,4 @@ _time() {
     date +'%H:%M:%S'
 }
 
-printf "%s : " "$(_net)" "$(_ping)" "$(_bat)" "$(_date)" "$(_time)"
+printf "%s : " "$(_spotify)" "$(_net)" "$(_ping)" "$(_bat)" "$(_date)" "$(_time)"
