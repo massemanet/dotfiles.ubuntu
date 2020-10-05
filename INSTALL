@@ -3,12 +3,9 @@
 sudo apt-get update && \
 sudo apt-get upgrade -y && \
 sudo apt-get install --autoremove -y \
-     automake curl deborphan feh g++ git gnome-tweaks gopass \
-     htop jq kwalletcli lksctp-tools make mosh ncdu netcat-traditional \
+     automake curl deborphan feh g++ git gopass \
+     htop jq lksctp-tools make mosh ncdu netcat-traditional \
      pass pavucontrol-qt powertop python-is-python3 shellcheck
-
-# snap is nice if it works
-sudo snap install spotify
 
 # get my stuff
 [ ! -e ~/.git ] &&
@@ -26,17 +23,10 @@ sudo snap install spotify
 ~/bin/install.sh bazelisk
 ~/bin/install.sh chromium
 ~/bin/install.sh docker
-~/bin/install.sh erlang
-~/bin/install.sh emacs
 ~/bin/install.sh keybase
 ~/bin/install.sh kubectl
+~/bin/install.sh spotify
+~/bin/install.sh sway
 ~/bin/install.sh wireshark
-~/bin/install.sh docker-compose
-~/bin/install.sh java
-~/bin/install.sh pgadmin
-~/bin/install.sh python
-
-# emacs (cask)
-[ ! -d ~/.cask ] && \
-    curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
-(cd ~/.emacs.d && ~/.cask/bin/cask install)
+~/bin/install.sh emacs
+~/bin/install.sh erlang

@@ -192,7 +192,8 @@ Repeated invocations toggle between the two most recently open buffers."
    '(flycheck-kotlin kotlin-mode edts yaml-mode solarized-theme smart-mode-line projectile pallet nyan-mode kubernetes highlight-parentheses gruvbox-theme go-mode flymake-rust flymake-jslint flycheck-rust exec-path-from-shell erlang dockerfile-mode dap-mode cargo bazel-mode))
  '(pdf-view-midnight-colors '("#fdf4c1" . "#1d2021"))
  '(term-default-bg-color nil)
- '(term-default-fg-color nil))
+ '(term-default-fg-color nil)
+ '(warning-suppress-types '(((package reinitialization)))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
