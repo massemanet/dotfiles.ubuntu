@@ -20,8 +20,6 @@ eval "$(dircolors)"
 # shellcheck disable=SC1090
 . <(kubectl completion bash)
 
-export AWS_VAULT_BACKEND=kwallet
-
 # define some git helpers
 # shellcheck source=bin/gitfunctions
 [ -f ~/bin/gitfunctions ] && . ~/bin/gitfunctions

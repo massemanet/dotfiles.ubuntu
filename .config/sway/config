@@ -158,6 +158,9 @@ bindsym $mod+Shift+c reload
 # lock screen
 bindsym $mod+Shift+z exec $locker
 
+# screen shot
+bindsym $mod+shift+g exec grim -g "$(slurp -d)" /tmp/grim-$(date -Iseconds).png
+
 # exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
