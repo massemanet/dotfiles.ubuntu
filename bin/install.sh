@@ -26,8 +26,9 @@ get-aws-vault() {
 }
 
 get-awscli() {
-    sudo apt-get update
-    sudo apt-get install -y awscli
+    sudo apt-get update &&
+        sudo apt-get install -y --auto-remove \
+             awscli
 }
 
 get-bazelisk() {
@@ -58,13 +59,24 @@ get-bazel() {
     sudo ln -s /usr/local/lib/bazel/bin/bazel-complete.bash /etc/bash_completion.d
 }
 
+get-brave(){
+    curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc |\
+        sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
+    echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" |\
+        sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+    sudo apt update &&
+        sudo apt install -y --auto-remove \
+             brave-browser
+}
+
 get-chromium() {
     echo 'deb http://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/ /' | \
         sudo tee /etc/apt/sources.list.d/home-ungoogled_chromium.list > /dev/null
     curl -s 'https://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/Release.key' | \
         gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home-ungoogled_chromium.gpg > /dev/null
-    sudo apt update
-    sudo apt install -y ungoogled-chromium
+    sudo apt update &&
+        sudo apt install -y --auto-remove \
+             ungoogled-chromium
 
     local GH="https://github.com/gorhill/uBlock/releases"
     local RE="download/[0-9\\.]+/uBlock0_[0-9\\.]+.chromium.zip"
@@ -83,9 +95,9 @@ get-docker() {
          "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
           disco \
           stable"
-    sudo apt-get update
-    sudo apt-get install -y \
-         docker-ce docker-ce-cli containerd.io
+    sudo apt-get update &&
+        sudo apt-get install -y --auto-remove \
+             docker-ce docker-ce-cli containerd.io
     sudo usermod -aG docker "$USER"
 }
 
@@ -161,8 +173,9 @@ get-emacs() {
     git clone --depth=2 --single-branch https://github.com/masm11/emacs
     cd emacs/
     ./autogen.sh
-    sudo apt install -y --auto-remove \
-         libcairo2-dev libgtk-3-dev libgnutls28-dev
+    sudo apt update &&
+        sudo apt install -y --auto-remove \
+             libcairo2-dev libgtk-3-dev libgnutls28-dev
     ./configure --with-pgtk --with-cairo --with-modules --without-makeinfo
     sudo make install
     [ ! -d ~/.cask ] && \
@@ -180,8 +193,9 @@ get-erlang() {
     command -v autoconf > /dev/null || err "install 'autoconf'"
 
     sudo true
-    sudo apt-get install -y \
-         libncurses-dev libpcap-dev libsctp-dev libssl-dev libwxgtk3.0-gtk3-dev
+    sudo apt update &&
+        sudo apt-get install -y --auto-remove \
+             libncurses-dev libpcap-dev libsctp-dev libssl-dev libwxgtk3.0-gtk3-dev
     [ -d ~/git/otp ] || git clone --depth=2 --branch "maint-$VSN" --single-branch \
                             https://github.com/erlang/otp.git ~/git/otp
     cd ~/git/otp/
@@ -214,16 +228,17 @@ get-intellij() {
 }
 
 get-java() {
-    sudo apt-get update \
-        && sudo apt-get install -y \
-                openjdk-8-jdk-headless openjdk-11-jdk-headless openssh-server
+    sudo apt-get update &&
+        sudo apt-get install -y --auto-remove \
+             openjdk-8-jdk-headless openjdk-11-jdk-headless openssh-server
     sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
 }
 
 get-keybase() {
     curl -sSL https://prerelease.keybase.io/keybase_amd64.deb > /tmp/keybase.deb
     sudo dpkg -i /tmp/keybase.deb || true
-    sudo apt-get install -yf
+    sudo apt update &&
+        sudo apt-get install -yf
 }
 
 get-kotlin() {
@@ -247,34 +262,38 @@ get-kubectl() {
     echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" > /tmp/kubernetes.list
     sudo mv /tmp/kubernetes.list /etc/apt/sources.list.d/kubernetes.list
     sudo apt-get update \
-        && sudo apt-get install -y kubectl
+        && sudo apt-get install -y --auto-remove \
+                kubectl
     kubectl completion bash > /tmp/kubectl_completion
     sudo cp /tmp/kubectl_completion /etc/bash_completion.d
 }
 
 get-pgadmin() {
     sudo apt-get update \
-        && sudo apt-get install -y pgadmin3
+        && sudo apt-get install -y --auto-remove \
+                pgadmin3
 }
 
 get-python() {
-    sudo apt-get update \
-        && sudo apt-get install -y python2 python3 \
-        && sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1 \
-        && sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
+    sudo apt-get update &&
+        sudo apt-get install -y python2 python3 &&
+        sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1 &&
+        sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
 }
 
 get-wireshark() {
-    sudo apt-get update \
-        && sudo apt-get install -y tshark wireshark
+    sudo apt-get update &&
+        sudo apt-get install -y --auto-remove \
+             tshark wireshark
     sudo usermod -aG wireshark "$USER"
 }
 
 get-pgadmin() {
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
     sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-    sudo apt-get update \
-         && sudo apt-get install -y pgadmin4
+    sudo apt-get update &&
+        sudo apt-get install -y --auto-remove \
+             pgadmin4
 }
 
 get-rust() {
@@ -286,13 +305,14 @@ get-spotify() {
     curl -sS https://download.spotify.com/debian/pubkey.gpg | sudo apt-key add -
     curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add -
     echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-    sudo apt-get update \
-        && sudo apt-get install -y --auto-remove spotify-client
+    sudo apt-get update &&
+        sudo apt-get install -y --auto-remove \
+             spotify-client
 }
 
 get-sway(){
     sudo apt-get update \
-         && sudo apt install -y \
+         && sudo apt install -y --auto-remove \
                  sway swaylock swayidle waybar slurp grim wl-clipboard fzf rofi
 }
 
