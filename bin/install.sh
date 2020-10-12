@@ -110,6 +110,23 @@ get-grpcurl() {
     sudo chmod +x /usr/local/bin/"$ITEM"
 }
 
+get-gtk-server() {
+    local VSN="${1:-}"
+    local DLPAGE="http://gtk-server.org/stable"
+    local RE="gtk-server-[0-9\\.]+.tar.gz"
+    local r
+
+    sudo apt update \
+        && sudo apt install -y --auto-remove \
+                libcairo2-dev libgtk-3-dev glade
+    r="$(curl -sL "$DLPAGE" | grep -oE "$RE" | grep "$VSN" | sort -uV | tail -n1)"
+    echo "found $r"
+    curl -sSL "$DLPAGE/$r" > /tmp/gtk-server.tgz
+    tar -xz -C /tmp/ -f /tmp/gtk-server.tgz
+    cd /tmp/gtk-server-*/src
+    ./configure
+    make && sudo make install
+}
 get-docker-compose() {
     local r
     local VSN="${1:-}"
