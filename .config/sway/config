@@ -14,6 +14,13 @@ set $alttab $HOME/bin/alttab.sh
 # launcher
 set $launcher "bash -c 'compgen -c | sort -u | rofi -dmenu | xargs -r swaymsg -t command exec'"
 
+for_window [class="Chromium"] move window to workspace 1:chromium
+for_window [class="Firefox"] move window to workspace 2:firefox
+for_window [class="Brave-browser"] move window to workspace 3:brave
+for_window [class="Spotify"] move window to workspace 4:spotify
+for_window [app_id=".*term.*"] move window to workspace 5:term
+for_window [app_id="emacs"] move window to workspace 6:emacs
+
 workspace 1:chromium output eDP-1
 workspace 2:firefox output eDP-1
 workspace 3:brave output eDP-1
