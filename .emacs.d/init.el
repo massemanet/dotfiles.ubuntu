@@ -93,7 +93,6 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-set-key (kbd "C-S-p")   `backward-list)
 (global-set-key (kbd "C-S-q")   `fill-paragraph)
 (global-set-key (kbd "C-S-t")   `transpose-lines)
-(global-set-key (kbd "C-S-u")   `fdlcap-change-case-current-word)
 (global-set-key (kbd "C-S-v")   `scroll-down)
 (global-set-key (kbd "C-S-w")   `kill-ring-save)
 (global-set-key (kbd "C-S-y")   `yank-pop)
@@ -110,6 +109,7 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-set-key (kbd "C-z")     'undo) ; be like a mac
 (global-set-key (kbd "C-{")     `previous-error)
 (global-set-key (kbd "C-}")     `next-error)
+(global-set-key (kbd "M-u")     `fdlcap-change-case-current-word)
 (global-set-key (kbd "M-z")     'undo) ; if screen eats C-z
 
 (let ((map minibuffer-local-map))
