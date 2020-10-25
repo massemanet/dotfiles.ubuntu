@@ -21,10 +21,17 @@ _net() {
     [ -n "$T" ] && echo "$T" | cut -f1 -d":"
 }
 
+_cpu(){
+    [ -r /tmp/uptime ] || cat /proc/uptime > /tmp/uptime
+    cat /proc/uptime > /tmp/uptime0
+    cat /tmp/uptime0 /tmp/uptime | (read -r a b ; read -r c d; echo "400-(100*($b-$d))/($a-$c)" | bc)
+    mv /tmp/uptime0 /tmp/uptime
+}
+
 _ping() {
     local T
-    T=$(ping -c1 -W1 google.com | grep -Eo "time=.* " | cut -f2 -d"=")
-    [ -n "$T" ] && echo "$T"
+    T=$(ping -c1 -W1 google.com | grep -Eo "time=[0-9\.]+" | cut -f2 -d"=")
+    [ -n "$T" ] && echo "${T}"
 }
 
 _date() {
@@ -35,4 +42,4 @@ _time() {
     date +'%H:%M:%S'
 }
 
-printf "%s : " "$(_spotify)" "$(_net)" "$(_ping)" "$(_bat)" "$(_date)" "$(_time)"
+printf "%s : " "$(_spotify)" "$(_net)" "$(_ping)ms" "$(_cpu)%" "$(_bat)" "$(_date)" "$(_time)"
