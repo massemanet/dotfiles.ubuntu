@@ -22,9 +22,10 @@ _net() {
 }
 
 _cpu(){
+    C="$(grep siblings /proc/cpuinfo | head -n1 | cut -f2 -d":" | tr -d " ")"
     [ -r /tmp/uptime ] || cat /proc/uptime > /tmp/uptime
     cat /proc/uptime > /tmp/uptime0
-    cat /tmp/uptime0 /tmp/uptime | (read -r a b ; read -r c d; echo "400-(100*($b-$d))/($a-$c)" | bc)
+    cat /tmp/uptime0 /tmp/uptime | (read -r a b ; read -r c d; echo "$C, $a, $b, $c, $d">>/tmp/dbg ; echo "(100*$C)-((100*($b-$d))/($a-$c))" | bc)
     mv /tmp/uptime0 /tmp/uptime
 }
 
