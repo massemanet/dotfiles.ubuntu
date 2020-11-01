@@ -7,7 +7,11 @@ C = fun() -> [(maps:from_list(case process_info(P) of undefined -> []; L -> L en
 ```
 
 ```erlang
-P = fun(_, undefined) -> ok; (S, Z) -> J = lists:foldl(fun(M,O) -> maps:get(message_queue_len, M, 0)+O end, 0, Z), io:fwrite("~p~n", [J]) end.
+N = fun(M) -> case {maps:get(registered_name, M, undefined), maps:get(initial_call, M, undefined)} of {undefined, {proc_lib,init_p,5}} -> try proc_lib:translate_initial_call(maps:get(pid,M)) catch _:_ -> dead end; {undefined, undefined} -> dead; {undefined,IC}->IC;{Reg, _} -> Reg end end.
+```
+
+```erlang
+P = fun(_, undefined) -> ok; (S, Z) -> J = lists:foldl(fun(M,O) -> Name = N(M), case maps:get(Name,O,undefined) of undefined -> O#{Name=>1}; _C->O#{Name=>_C+1} end end, #{}, S), io:fwrite("~p~n",[lists:sort(maps:fold(fun(K,V,A)-> case 10<V of true->[{V,K}|A]; false -> A end end, [], J))]) end.
 ```
 
 ```erlang
