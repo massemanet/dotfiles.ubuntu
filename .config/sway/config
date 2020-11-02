@@ -55,15 +55,11 @@ input type:keyboard {
 }
 
 ### output config
-#  Current mode: 3840x2160 @ 60.000000 Hz
-output 'Unknown 0xA029 0x00000000' {
-  pos 0 1020
-  scale 2
-}
 
-#  Current mode: 1920x1080 @ 60.049000 Hz
-output 'Unknown 0x313D 0x00000000' {
-  pos 0 840
+#  Current mode: 1366x768 @ 60.001999 Hz
+output 'Unknown 0x02D3 0x00000000' {
+  pos 554 312
+  scale 1
 }
 
 #  Current mode: 3200x1800 @ 60.000000 Hz
@@ -72,17 +68,28 @@ output 'Sharp Corporation 0x144A 0x00000000' {
   scale 2
 }
 
+#  Current mode: 3840x2160 @ 60.000000 Hz
+output 'Unknown 0xA029 0x00000000' {
+  pos 0 1020
+  scale 2
+}
+
 #  Current mode: 1920x1080 @ 60.000000 Hz
-output 'Dell Inc. DELL U2417H 5K9YD881CLTL' {
-  pos 3000 0
-  transform 90
+output 'Unknown 24G1WG4 0x00001D78' {
+  pos 1920 0
+  scale 1
 }
 
 #  Current mode: 1920x1080 @ 60.000000 Hz
 output 'Dell Inc. DELL U2417H 5K9YD881CM9L' {
   pos 1920 0
   transform 270
+}
 
+#  Current mode: 1920x1080 @ 60.000000 Hz
+output 'Dell Inc. DELL U2417H 5K9YD881CLTL' {
+  pos 3000 0
+  transform 90
 }
 
 #
