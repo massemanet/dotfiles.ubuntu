@@ -9,7 +9,7 @@ set $mod Mod4
 set $internal LVDS-1
 
 # Your preferred terminal emulator
-set $term /usr/bin/gnome-terminal
+set $term /usr/bin/x-terminal-emulator
 
 # alttab
 set $alttab $HOME/bin/alttab.sh
