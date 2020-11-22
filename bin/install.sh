@@ -78,15 +78,26 @@ get-chromium() {
         sudo apt install -y --auto-remove \
              ungoogled-chromium
 
+    local r
+    local GH="https://github.com/NeverDecaf/chromium-web-store/releases"
+    local RE="download/v[0-9\\.]+/[a-zA-Z0-9\\.]+crx"
+    r="$(curl -sSL "$GH" | grep -Eo "$RE" | grep "$VSN" | sort -Vu | tail -n1)"
+    echo "found file $r"
+    mkdir -p ~/.local/chromium-web-store
+    curl -sSL "$GH/$r" > ~/.local/chromium-web-store/chromium-web-store.crx
+    (cd ~/.local/chromium-web-store && unzip chromium-web-store.crx) || true
+    ln -s ~/.local/chromium-web-store /tmp
+    echo "Add the extension in chromium; 'More Tools => Extensions => load unpacked' = /tmp/chromium-web-store"
+
     local GH="https://github.com/gorhill/uBlock/releases"
     local RE="download/[0-9\\.]+/uBlock0_[0-9\\.]+.chromium.zip"
-    local r
     r="$(curl -sSL "$GH" | grep -Eo "$RE" | grep "$VSN" | sort -Vu | tail -n1)"
     echo "found file $r"
     curl -sSL "$GH/$r" > /tmp/ublock.zip
     unzip -d ~/.local /tmp/ublock.zip
     mv ~/.local/uBlock0.chromium ~/.local/ublock
-    echo "Add the extension in chromium; 'More Tools => Extensions' = ~/.local/ublock"
+    ln -s ~/.local/ublock /tmp
+    echo "Add the extension in chromium; 'More Tools => Extensions => load unpacked' = /tmp/ublock"
 }
 
 get-docker() {
@@ -310,10 +321,20 @@ get-spotify() {
              spotify-client
 }
 
+get-steam() {
+    sudo dpkg --add-architecture i386 &&
+        sudo apt update &&
+        sudo apt install xterm libgl1-mesa-dri:i386 libgl1:i386 libc6:i386
+
+    wget -O /tmp/steam.deb http://media.steampowered.com/client/installer/steam.deb &&
+        sudo dpkg -i /tmp/steam.deb &&
+        sudo apt --fix-broken install
+}
+
 get-sway(){
-    sudo apt-get update \
-         && sudo apt install -y --auto-remove \
-                 sway swaylock swayidle waybar slurp grim wl-clipboard fzf rofi
+    sudo apt-get update && \
+        sudo apt install -y --auto-remove \
+             sway swaylock swayidle xwayland slurp grim wl-clipboard fzf wofi
 }
 
 sudo true

@@ -4,9 +4,11 @@ sudo apt-get update && \
 sudo apt-get upgrade -y && \
 sudo apt-get install --autoremove -y \
      automake blueman curl deborphan feh g++ git gopass \
-     htop jq lksctp-tools make mosh ncdu netcat-traditional \
+     jq kitty linux-firmware lksctp-tools make mosh \
+     ncdu netcat-traditional network-manager \
      pass pavucontrol powertop python-is-python3 \
      shellcheck shellinabox
+sudo apt purge snapd
 
 # get my stuff
 [ ! -e ~/.git ] &&

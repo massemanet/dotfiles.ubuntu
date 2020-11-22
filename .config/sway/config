@@ -9,13 +9,13 @@ set $mod Mod4
 set $internal LVDS-1
 
 # Your preferred terminal emulator
-set $term /usr/bin/x-terminal-emulator
+set $term /usr/bin/kitty
 
 # alttab
 set $alttab $HOME/bin/alttab.sh
 
 # launcher
-set $launcher "bash -c 'compgen -c | sort -u | rofi -dmenu | xargs -r swaymsg -t command exec'"
+set $launcher "bash -c 'compgen -c | grep -E "^[a-z]" | sort -u | wofi --dmenu | xargs -r swaymsg -t command exec'"
 
 for_window [class="Chromium"] move window to workspace 1:brave
 for_window [class="Brave-browser"] move window to workspace 1:brave
@@ -27,6 +27,9 @@ for_window [app_id="emacs"] move window to workspace 5:emacs
 workspace 1:brave   output $internal
 workspace 2:firefox output $internal
 workspace 3:spotify output $internal
+
+## still needed
+xwayland force
 
 ### Idle configuration
 #
@@ -46,7 +49,8 @@ exec swayidle -w \
 input type:touchpad {
   natural_scroll enabled
   tap enabled
-  tap_button_map lmr
+  middle_emulation enabled
+  tap_button_map lrm
 }
 
 input type:keyboard {
