@@ -17,15 +17,16 @@ set $alttab $HOME/bin/alttab.sh
 # launcher
 set $launcher "bash -c 'compgen -c | grep -E "^[a-z]" | sort -u | wofi --dmenu | xargs -r swaymsg -t command exec'"
 
-for_window [class="Chromium"] move window to workspace 1:brave
 for_window [class="Brave-browser"] move window to workspace 1:brave
-for_window [class="Firefox"] move window to workspace 2:firefox
+for_window [class="Chromium"] move window to workspace 2:chromium
+for_window [class="Firefox"] move window to workspace 2:chromium
 for_window [class="Spotify"] move window to workspace 3:spotify
+for_window [app_id="kitty"] move window to workspace 4:term
 for_window [app_id=".*term.*"] move window to workspace 4:term
 for_window [app_id="emacs"] move window to workspace 5:emacs
 
-workspace 1:brave   output $internal
-workspace 2:firefox output $internal
+workspace 1:brave output $internal
+workspace 2:chromium output $internal
 workspace 3:spotify output $internal
 
 ## still needed
@@ -169,7 +170,7 @@ bindsym $mod+tab workspace back_and_forth
 
 # switch to workspace
 bindsym $mod+1 workspace 1:brave
-bindsym $mod+2 workspace 2:firefox
+bindsym $mod+2 workspace 2:chromium
 bindsym $mod+3 workspace 3:spotify
 bindsym $mod+4 workspace 4:term
 bindsym $mod+5 workspace 5:emacs
@@ -180,7 +181,7 @@ bindsym $mod+9 workspace 9
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1:brave
-bindsym $mod+Shift+2 move container to workspace 2:firefox
+bindsym $mod+Shift+2 move container to workspace 2:chromium
 bindsym $mod+Shift+3 move container to workspace 3:spotify
 bindsym $mod+Shift+4 move container to workspace 4:term
 bindsym $mod+Shift+5 move container to workspace 5:emacs
