@@ -110,6 +110,16 @@ get-docker() {
         sudo apt-get install -y --auto-remove \
              docker-ce docker-ce-cli containerd.io
     sudo usermod -aG docker "$USER"
+
+    local r
+    local GH="https://github.com/docker/docker-credential-helpers/releases"
+    local RE="download/v[0-9\\.]+/docker-credential-pass-v[0-9\\.]+-amd64.tar.gz"
+    r="$(curl -sSL "$GH" | grep -Eo "$RE" | grep "$VSN" | sort -Vu | tail -n1)"
+    echo "found file $r"
+    curl -sSL "$GH/$r" > /tmp/docker_ch.tgz
+    tar -C ~/bin -xzf /tmp/docker_ch.tgz
+    chmod +x ~/bin/docker-credential-pass
+    echo '{"credsStore": "pass"}' > ~/.docker/config.json
 }
 
 get-go() {
