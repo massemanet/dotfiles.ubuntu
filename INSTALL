@@ -3,12 +3,12 @@
 sudo apt-get update && \
 sudo apt-get upgrade -y && \
 sudo apt-get install --autoremove -y \
-     automake blueman curl deborphan feh g++ git gopass \
+     automake curl deborphan feh g++ git gopass \
      jq kitty linux-firmware lksctp-tools make mosh \
      ncdu netcat-traditional network-manager \
-     pass pavucontrol powertop python-is-python3 \
+     pass pavucontrol powertop python-is-python3 pulseaudio-module-bluetooth \
      shellcheck shellinabox
-sudo apt purge snapd
+sudo apt purge --autoremove snapd
 
 # get my stuff
 [ ! -e ~/.git ] &&
