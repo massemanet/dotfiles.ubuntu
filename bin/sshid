@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+SSHDIR=~/pet/ssh
+
 set_id() {
-    local ID=~/_ssh/$1
+    local ID="$SSHDIR/$1"
     if [ -f "$ID" ]; then
         ssh-add -D
         ssh-add "$ID"
@@ -10,8 +12,7 @@ set_id() {
     fi
 }
 get_id() {
-    local IDDIR=~/_ssh
-    for i in  $(cd "$IDDIR" || exit; echo id_rsa_*)
+    for i in  $(cd "$SSHDIR" || exit; echo id_rsa_*)
     do echo "$i" | cut -f1 -d"." | cut -f3 -d"_"
     done | sort -u
 }

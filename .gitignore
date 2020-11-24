@@ -14,7 +14,7 @@ foo*
 /.IdeaIC*/
 /.Xauthority
 /.aspell.*
-/.aws/
+/.aws
 /.awsvault/
 /.bash_history
 /.bash_logout
@@ -30,7 +30,7 @@ foo*
 /.fontconfig/
 /.gkrellm2/
 /.gnome/
-/.gnupg/
+/.gnupg
 /.gradle/
 /.gtkrc-*
 /.intellij/
@@ -38,7 +38,7 @@ foo*
 /.kde/
 /.konan/
 /.krew/
-/.kube/
+/.kube
 /.lastpass/
 /.lesshst
 /.local/
@@ -80,4 +80,5 @@ foo*
 /user_default.erl
 
 /git/
+/pet/
 /wg2/

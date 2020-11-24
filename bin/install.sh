@@ -117,9 +117,12 @@ get-docker() {
     r="$(curl -sSL "$GH" | grep -Eo "$RE" | grep "$VSN" | sort -Vu | tail -n1)"
     echo "found file $r"
     curl -sSL "$GH/$r" > /tmp/docker_ch.tgz
-    tar -C ~/bin -xzf /tmp/docker_ch.tgz
-    chmod +x ~/bin/docker-credential-pass
-    echo '{"credsStore": "pass"}' > ~/.docker/config.json
+    mkdir -p ~/pet/docker
+    mkdir -p ~/.docker
+    tar -C ~/pet/docker -xzf /tmp/docker_ch.tgz
+    chmod +x ~/pet/docker/docker-credential-pass
+    echo '{"credsStore": "pass"}' > ~/pet/docker/config.json
+    (cd ~/bin; ln -s ../pet/docker/docker-credential-pass . ; cd ~/.docker ; ln -s ../pet/docker/config.json .)
 }
 
 get-go() {
