@@ -3,10 +3,18 @@
 sudo apt-get update && \
 sudo apt-get upgrade -y && \
 sudo apt-get install --autoremove -y \
-     automake curl deborphan feh g++ git gopass \
-     jq kitty linux-firmware lksctp-tools make mosh \
+     automake \
+     curl \
+     deborphan \
+     feh \
+     g++ git gopass \
+     jq \
+     kitty \
+     linux-firmware lksctp-tools \
+     make mosh \
      ncdu netcat-traditional network-manager \
      pass pavucontrol powertop python-is-python3 pulseaudio-module-bluetooth \
+     ripgrep \
      shellcheck shellinabox
 sudo apt purge --autoremove snapd
 
