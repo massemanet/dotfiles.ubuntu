@@ -6,10 +6,7 @@ foo*
 *.beam
 /specs
 
-/bin/bazel
-/bin/docker-credential-*
-/bin/kubectl-*
-/_ssh/
+/*.png
 /.ICEauthority
 /.IdeaIC*/
 /.Xauthority
@@ -21,8 +18,8 @@ foo*
 /.cache/
 /.cask/
 /.config/
-/.docker/
 /.dbus/
+/.docker/
 /.emacs.d/
 /.erlang
 /.erlang.cookie
@@ -33,6 +30,7 @@ foo*
 /.gnupg
 /.gradle/
 /.gtkrc-*
+/.hydrogen/
 /.intellij/
 /.java/
 /.kde/
@@ -41,6 +39,7 @@ foo*
 /.kube
 /.lastpass/
 /.lesshst
+/.lmmsrc.xml
 /.local/
 /.localbashrc
 /.mozilla/
@@ -68,7 +67,11 @@ foo*
 /.xinputrc
 /.xpra/
 /.xsession-errors
-/*.png
+/_ssh/
+/autosave.h2song
+/bin/bazel
+/bin/docker-credential-*
+/bin/kubectl-*
 
 /Desktop/
 /Downloads/
