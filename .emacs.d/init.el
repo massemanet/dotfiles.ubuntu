@@ -25,6 +25,8 @@
 (nyan-mode 1)
 (global-flycheck-mode)
 
+(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+
 (setq sml/no-confirm-load-theme t)
 (add-hook 'after-init-hook 'sml/setup)
 
