@@ -17,8 +17,8 @@ _bat() {
 }
 _net() {
     local T
-    T="$(nmcli -g name,type connection show --active | grep wireless)"
-    [ -n "$T" ] && echo "$T" | cut -f1 -d":"
+    T="$(2>/dev/null iwconfig | grep ESSID | cut -f2 -d"\"")"
+    [ -n "$T" ] && echo "$T"
 }
 
 _cpu(){

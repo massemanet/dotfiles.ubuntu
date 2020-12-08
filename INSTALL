@@ -12,7 +12,7 @@ sudo apt-get install --autoremove -y \
      kitty \
      linux-firmware lksctp-tools \
      make mosh \
-     ncdu netcat-traditional network-manager \
+     ncdu netcat-traditional \
      pass pavucontrol powertop python-is-python3 pulseaudio-module-bluetooth \
      ripgrep \
      shellcheck shellinabox

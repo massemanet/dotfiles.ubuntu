@@ -1,7 +1,6 @@
 (source gnu)
 (source melpa)
 
-(depends-on "async")
 (depends-on "bazel-mode")
 (depends-on "cargo")
 (depends-on "cask")
@@ -24,7 +23,6 @@
 (depends-on "markdown-mode")
 (depends-on "nyan-mode")
 (depends-on "pallet")
-(depends-on "popup")
 (depends-on "rust-mode")
 (depends-on "s")
 (depends-on "shut-up")
