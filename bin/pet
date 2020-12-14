@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-DEST="$HOME/pet"
-[ ! -d "$DEST" ] && (cd "$(dirname "$DEST")" && git init "$(basname "$DEST")")
+setup() {
+ DEST="$HOME/pet"
+ [ ! -d "$DEST" ] && (cd "$(dirname "$DEST")" && git init "$(basname "$DEST")")
 
 if [ ! -d "$DEST/ssh" ]; then
     [ -z "$REMOTE" ] && read -r -p "remote ssh host: " REMOTE
@@ -60,3 +61,16 @@ tar -czf /tmp/pet.tgz \
 .aws/ .config/ .docker/ .gnupg/ .kube/ .local/ .password-store/ pet/ssh/
 gpg -c /tmp/pet.tgz
 mv /tmp/pet.tgz.gpg "$DEST"
+}
+
+unpack() {
+  [ ! -f /tmp/pet.tgz.gpg ] && echo "no pet file." && exit 1
+  gpg -d /tmp/pet.tgz.gpg > /tmp/pet.tgz
+  tar -C ~ -xzf /tmp/pet.tgz
+}
+
+case "$1" in
+  init) setup;;
+  unpack) unpack;;
+  *) echo "unrecognized command: $1";;
+esac

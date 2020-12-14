@@ -1,5 +1,11 @@
 #!/bin/bash
 
+command -v sudo || su root -c "apt install -y sudo"
+groups | grep -q sudo || su root -c "adduser $USER sudo"
+
+S=/etc/apt/sources.list
+grep -qE ' main$' "$S" && sudo sed -i 's/ main$/ main contrib non-free/g' "$S"
+
 sudo apt-get update && \
 sudo apt-get upgrade -y && \
 sudo apt-get install --autoremove -y \
@@ -28,16 +34,20 @@ sudo apt purge --autoremove snapd
         mv /tmp/dotfiles.ubuntu/.git ~ && \
         (cd && git reset --hard)
 
+~/bin/pet unpack
+
+exit 0
+~/bin/install.sh chromium
+~/bin/install.sh keybase
+~/bin/install.sh spotify
+~/bin/install.sh sway
+~/bin/install.sh emacs
+exit 0
 ~/bin/install.sh aws-vault
 ~/bin/install.sh awscli
 ~/bin/install.sh bazel
 ~/bin/install.sh bazelisk
-~/bin/install.sh chromium
 ~/bin/install.sh docker
-~/bin/install.sh keybase
 ~/bin/install.sh kubectl
-~/bin/install.sh spotify
-~/bin/install.sh sway
 ~/bin/install.sh wireshark
-~/bin/install.sh emacs
 ~/bin/install.sh erlang

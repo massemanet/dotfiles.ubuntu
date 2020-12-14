@@ -194,12 +194,12 @@ get-gopass() {
 # emacs for wayland
 get-emacs() {
     cd /tmp
-    git clone --depth=2 --single-branch https://github.com/masm11/emacs
+    [ -d emacs ] || git clone --depth=2 --single-branch https://github.com/masm11/emacs
     cd emacs/
     ./autogen.sh
     sudo apt update &&
         sudo apt install -y --auto-remove \
-             libcairo2-dev libgtk-3-dev libgnutls28-dev
+             libcairo2-dev libgtk-3-dev libgnutls28-dev libncurses-dev
     ./configure --with-pgtk --with-cairo --with-modules --without-makeinfo
     sudo make install
     [ ! -d ~/.cask ] && \
