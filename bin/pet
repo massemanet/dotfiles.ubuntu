@@ -20,6 +20,12 @@ if [ ! -d "$HOME/.password-store/$USER" ]; then
     pass init -p "$USER" "$USER"
 fi
 
+[ -z "$SHORT_WORK" ] && read -r -p "work tag (like foo): " SHORT_WORK
+if [ ! -d "$HOME/.password-store/$SHORT_WORK" ]; then
+    read -r -p "work secrets @github (like user/repo): " SECRETS
+    git clone "git@github.com:$SECRETS" ~/.password-store/"$SHORT_WORK"
+fi
+
 if [ ! -d "$HOME/.aws" ]; then
     [ -z "$REMOTE" ] && read -r -p "remote ssh host: " REMOTE
     [ -z "$SHORT_WORK" ] && read -r -p "work tag (like foo): " SHORT_WORK
