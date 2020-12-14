@@ -1,28 +1,34 @@
 #!/bin/bash
 
+# set up sudo
 command -v sudo || su root -c "apt install -y sudo"
 groups | grep -q sudo || su root -c "adduser $USER sudo"
 
+# timezone
+sudo timedatectl set-timezone Europe/Stockholm
+
+# get non-free drivers
 S=/etc/apt/sources.list
 grep -qE ' main$' "$S" && sudo sed -i 's/ main$/ main contrib non-free/g' "$S"
 
+# install some sane stuff
 sudo apt-get update && \
 sudo apt-get upgrade -y && \
 sudo apt-get install --autoremove -y \
      automake \
      curl \
      deborphan \
-     feh \
+     feh firmware-linux \
      g++ git gopass \
      jq \
      kitty \
-     linux-firmware lksctp-tools \
+     lksctp-tools \
      make mosh \
      ncdu netcat-traditional \
      pass pavucontrol powertop python-is-python3 pulseaudio-module-bluetooth \
      ripgrep \
      shellcheck shellinabox
-sudo apt purge --autoremove snapd
+command -v snap && sudo apt purge --autoremove snapd
 
 # get my stuff
 [ ! -e ~/.git ] &&
@@ -34,20 +40,20 @@ sudo apt purge --autoremove snapd
         mv /tmp/dotfiles.ubuntu/.git ~ && \
         (cd && git reset --hard)
 
-~/bin/pet unpack
+# get the pet files
+[ -d ~/pet ] || ~/bin/pet unpack
 
-exit 0
-~/bin/install.sh chromium
-~/bin/install.sh keybase
-~/bin/install.sh spotify
-~/bin/install.sh sway
-~/bin/install.sh emacs
-exit 0
-~/bin/install.sh aws-vault
-~/bin/install.sh awscli
-~/bin/install.sh bazel
-~/bin/install.sh bazelisk
-~/bin/install.sh docker
-~/bin/install.sh kubectl
-~/bin/install.sh wireshark
-~/bin/install.sh erlang
+# install utilities
+command -v sway          || ~/bin/install.sh sway
+command -v emacs         || ~/bin/install.sh emacs
+command -v brave-browser || ~/bin/install.sh brave
+command -v chromium      || ~/bin/install.sh chromium
+command -v keybase       || ~/bin/install.sh keybase
+command -v spotify       || ~/bin/install.sh spotify
+command -v aws-vault     || ~/bin/install.sh aws-vault
+command -v aws           || ~/bin/install.sh awscli
+command -v bazel         || (~/bin/install.sh bazel && ~/bin/install.sh bazelisk)
+command -v docker        || ~/bin/install.sh docker
+command -v kubectl       || ~/bin/install.sh kubectl
+command -v wireshark     || ~/bin/install.sh wireshark
+command -v erl           || ~/bin/install.sh erlang

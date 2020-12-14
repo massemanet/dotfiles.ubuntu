@@ -70,15 +70,26 @@ get-brave(){
 }
 
 get-chromium() {
-    echo 'deb http://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/ /' | \
-        sudo tee /etc/apt/sources.list.d/home-ungoogled_chromium.list > /dev/null
-    curl -s 'https://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/Release.key' | \
-        gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home-ungoogled_chromium.gpg > /dev/null
-    sudo apt update &&
-        sudo apt install -y --auto-remove \
-             ungoogled-chromium
+    local v r
+    local GH="https://github.com/Eloston/ungoogled-chromium-binaries/releases"
 
-    local r
+    r="$(curl -sSL "$GH")"
+    v="$(echo "$r" | grep -Eo "download/[^/]+unportable[^/]+" | sort -u)"
+    r="$(echo "$r" | grep -Eo "$v/ungoogled-chromium.*_amd64.deb" | grep -Ev "driver|dbgsym")"
+    for v in $r
+    do echo "found file $v"
+       curl -sSL "$GH/$v" > /tmp/
+       sudo dpkg -i /tmp/$$
+    done
+
+#     echo 'deb http://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/ /' | \
+#         sudo tee /etc/apt/sources.list.d/home-ungoogled_chromium.list > /dev/null
+#     curl -s 'https://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/Release.key' | \
+#         gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home-ungoogled_chromium.gpg > /dev/null
+#     sudo apt update &&
+#         sudo apt install -y --auto-remove \
+#              ungoogled-chromium
+
     local GH="https://github.com/NeverDecaf/chromium-web-store/releases"
     local RE="download/v[0-9\\.]+/[a-zA-Z0-9\\.]+crx"
     r="$(curl -sSL "$GH" | grep -Eo "$RE" | grep "$VSN" | sort -Vu | tail -n1)"
@@ -88,38 +99,33 @@ get-chromium() {
     (cd ~/.local/chromium-web-store && unzip chromium-web-store.crx) || true
     ln -s ~/.local/chromium-web-store /tmp
     echo "Add the extension in chromium; 'More Tools => Extensions => load unpacked' = /tmp/chromium-web-store"
-
-    local GH="https://github.com/gorhill/uBlock/releases"
-    local RE="download/[0-9\\.]+/uBlock0_[0-9\\.]+.chromium.zip"
-    r="$(curl -sSL "$GH" | grep -Eo "$RE" | grep "$VSN" | sort -Vu | tail -n1)"
-    echo "found file $r"
-    curl -sSL "$GH/$r" > /tmp/ublock.zip
-    unzip -d ~/.local /tmp/ublock.zip
-    mv ~/.local/uBlock0.chromium ~/.local/ublock
-    ln -s ~/.local/ublock /tmp
-    echo "Add the extension in chromium; 'More Tools => Extensions => load unpacked' = /tmp/ublock"
+    echo "Also visit chrome://flags/#extension-mime-request-handling and set to 'Always prompt...'"
 }
 
 get-docker() {
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    sudo add-apt-repository \
-         "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-          disco \
-          stable"
-    sudo apt-get update &&
-        sudo apt-get install -y --auto-remove \
-             docker-ce docker-ce-cli containerd.io
-    sudo usermod -aG docker "$USER"
+    local r s
 
-    local r
+    B="https://download.docker.com/linux/debian/dists/buster/pool/test/amd64"
+    r="$(curl -sSL "$B")"
+    for s in containerd.io docker-ce-cli docker-ce
+    do RE="${s}_[^_]*_amd64.deb"
+       S="$(echo "$r" | grep -Eo "$RE" | sort -urV | head -n 1)"
+       echo "$S"
+       curl -sSL "$B/$S" > /tmp/$$
+       sudo dpkg -i /tmp/$$
+    done
+
+    groups | grep docker || sudo adduser "$USER" docker
+
     local GH="https://github.com/docker/docker-credential-helpers/releases"
     local RE="download/v[0-9\\.]+/docker-credential-pass-v[0-9\\.]+-amd64.tar.gz"
     r="$(curl -sSL "$GH" | grep -Eo "$RE" | grep "$VSN" | sort -Vu | tail -n1)"
     echo "found file $r"
-    curl -sSL "$GH/$r" > /tmp/docker_ch.tgz
+    curl -sSL "$GH/$r" > /tmp/docker_cred_helper.tgz
+    rm -rf ~/pet/docker
     mkdir -p ~/pet/docker
     mkdir -p ~/.docker
-    tar -C ~/pet/docker -xzf /tmp/docker_ch.tgz
+    tar -C ~/pet/docker -xzf /tmp/docker_cred_helper.tgz
     chmod +x ~/pet/docker/docker-credential-pass
     echo '{"credsStore": "pass"}' > ~/pet/docker/config.json
     (cd ~/bin; ln -s ../pet/docker/docker-credential-pass . ; cd ~/.docker ; ln -s ../pet/docker/config.json .)
@@ -259,10 +265,9 @@ get-java() {
 }
 
 get-keybase() {
-    curl -sSL https://prerelease.keybase.io/keybase_amd64.deb > /tmp/keybase.deb
-    sudo dpkg -i /tmp/keybase.deb || true
-    sudo apt update &&
-        sudo apt-get install -yf
+    (cd /tmp && curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb)
+    sudo apt install /tmp/keybase_amd64.deb
+    run_keybase
 }
 
 get-kotlin() {
@@ -354,4 +359,5 @@ sudo true
 [ -z "$1" ] && usage
 TRG="$1"
 VSN="${2:-}"
+echo "## $TRG:$VSN ##################################################################"
 "get-$TRG" "$VSN"
