@@ -3,8 +3,8 @@
 INTERFACE="$(iw dev | grep Interface  | cut -f2 -d" ")"
 CFG="/etc/wpa_supplicant/wpa_supplicant-$INTERFACE.conf"
 
-if [ ! -f "$CFG" ]; then
-    cat | sudo tee "$CFG" <<HERE
+if [ ! -f "$CFG" ]
+then cat | sudo tee "$CFG" <<HERE
 ctrl_interface=/run/wpa_supplicant
 update_config=1
 HERE
