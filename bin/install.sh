@@ -50,6 +50,9 @@ get-bazel() {
     local RE="download/[.0-9-]+/bazel-[.0-9-]+-installer-linux-x86_64.sh"
     local r
 
+    sudo apt-get update &&
+        sudo apt-get install -y --auto-remove \
+             unzip
     r="$(curl -sSL "$GH" | grep -Eo "$RE" | grep "$VSN" | sort -Vu | tail -n1)"
     echo "found file $r"
     curl -sSL "$GH/$r" > /tmp/bazel.sh
@@ -78,7 +81,7 @@ get-chromium() {
     r="$(echo "$r" | grep -Eo "$v/ungoogled-chromium.*_amd64.deb" | grep -Ev "driver|dbgsym")"
     for v in $r
     do echo "found file $v"
-       curl -sSL "$GH/$v" > /tmp/
+       curl -sSL "$GH/$v" > /tmp/$$
        sudo dpkg -i /tmp/$$
     done
 
@@ -266,7 +269,8 @@ get-java() {
 
 get-keybase() {
     (cd /tmp && curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb)
-    sudo apt install /tmp/keybase_amd64.deb
+    sudo apt install -y --auto-remove \
+         /tmp/keybase_amd64.deb
     run_keybase
 }
 

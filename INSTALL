@@ -5,7 +5,8 @@ command -v sudo || su root -c "apt install -y sudo"
 groups | grep -q sudo || su root -c "adduser $USER sudo"
 
 # timezone
-sudo timedatectl set-timezone Europe/Stockholm
+TZ="Europe/Stockholm"
+[ "$(timedatectl show | grep Timezone | cut -f2 -d"=")" = "$TZ" ] || sudo timedatectl set-timezone "$TZ"
 
 # get non-free drivers
 S=/etc/apt/sources.list

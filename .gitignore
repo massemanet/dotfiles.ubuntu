@@ -64,6 +64,7 @@ foo*
 /.terraform.d/
 /.uplink/
 /.wg2/
+/.wget*
 /.xinputrc
 /.xpra/
 /.xsession-errors
