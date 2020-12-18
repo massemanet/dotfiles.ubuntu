@@ -10,12 +10,12 @@ update_config=1
 HERE
     fi
 
-    read -r -p"password for $SSID: " -s KEY
+    read -r -p "password for $SSID: " -s KEY
     CONF=$(wpa_passphrase "$SSID" "$KEY" | grep -v "\#")
 
     echo "$CONF"
     if ! grep -q "$CONF" "$CFG"
-    then read -r -p"looks good? (y/n):" KEEP
+    then read -r -p "looks good? (y/n):" KEEP
          [ "$KEEP" = "y" ] || exit 0
          echo "$CONF" | sudo tee "$CFG"
     fi

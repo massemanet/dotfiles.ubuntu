@@ -44,6 +44,18 @@ command -v snap && sudo apt purge --autoremove snapd
 # get the pet files
 [ -d ~/pet ] || ~/bin/pet unpack
 
+wireless() {
+    lspci | grep Network | grep -q BCM4360 || exit 0
+    local VSN
+    VSN="$(uname -r|sed 's,[^-]*-[^-]*-,,')"
+    sudo apt-get install -y --auto-remove \
+         linux-image-"$VSN" linux-headers-"$VSN" broadcom-sta-dkms && \
+        sudo modprobe -r b44 b43 b43legacy ssb brcmsmac bcma && \
+        sudo modprobe wl
+}
+
+ip link | grep -q wl || wireless
+
 # install utilities
 command -v sway          || ~/bin/install.sh sway
 command -v emacs         || ~/bin/install.sh emacs
