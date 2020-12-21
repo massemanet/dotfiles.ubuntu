@@ -24,8 +24,6 @@
 
 (defun my-erlang-mode-hook ()
   "We want company mode and flycheck."
-  (require 'edts-start)
-  (setq edts-man-root (car (file-expand-wildcards (concat (getenv "HOME")  "/.emacs.d/edts/doc/*"))))
   (setq
    flycheck-erlang-include-path (append
                                  (file-expand-wildcards

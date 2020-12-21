@@ -7,14 +7,22 @@ _spotify(){
 }
 
 _bat() {
-    local STATUS CAPACITY ENERGY POWER
+    local STATUS CAPACITY CHARGE CURRENT
     STATUS="$(cat /sys/class/power_supply/BAT0/status)"
     CAPACITY="$(cat /sys/class/power_supply/BAT0/capacity)"
-    ENERGY="$(cat /sys/class/power_supply/BAT0/charge_now)"
-    POWER="$(cat /sys/class/power_supply/BAT0/current_now)"
-    [ "$POWER" -ne 0 ] && [ "$STATUS" != "Full" ] && TIME="($((60*(ENERGY/10000)/(POWER/10000)))min)"
-    echo "${STATUS}[${CAPACITY}%${TIME:-""}]" || echo "$STATUS"
+    if [ "$1" = "color" ]; then
+        if [ "$STATUS" = "Discharging" ] && ((CAPACITY < 5))
+        then echo "#ee1111"
+        else echo "11ee11"
+        fi
+    else
+        CHARGE="$(cat /sys/class/power_supply/BAT0/charge_now)"
+        CURRENT="$(cat /sys/class/power_supply/BAT0/current_now)"
+        [ "$CURRENT" -ne 0 ] && [ "$STATUS" != "Full" ] && TIME="($(((60*CHARGE)/CURRENT))min)"
+        echo "${STATUS}[${CAPACITY}%${TIME:-""}]"
+    fi
 }
+
 _net() {
     local T
     T="$(2>/dev/null iwconfig | grep ESSID | cut -f2 -d"\"")"
@@ -43,5 +51,24 @@ _date() {
 _time() {
     date +'%H:%M:%S'
 }
+_color() {
+    echo "#11ee11"
+}
 
-printf "%s : " "$(_spotify)" "$(_net)" "$(_ping)ms" "$(_cpu)%" "$(_bat)" "$(_date)" "$(_time)"
+_bar() {
+    printf '[{"full_text": "%s"}' "$(_spotify)"
+    printf ',{"full_text": "%s"}' "$(_net)"
+    printf ',{"full_text": "%s"}' "$(_ping)ms"
+    printf ',{"full_text": "%s"}' "$(_cpu)%"
+    printf ',{"full_text": "%s", "color":"'"$(_bat color)"'"}' "$(_bat)"
+    printf ',{"full_text": "%s"}' "$(_date)"
+    printf ',{"full_text": "%s"}' "$(_time)"
+    echo "],"
+}
+
+echo '{"version": 1}'
+echo "["
+echo "[],"
+while sleep 2
+do _bar
+done

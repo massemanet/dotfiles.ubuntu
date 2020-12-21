@@ -181,6 +181,8 @@ Repeated invocations toggle between the two most recently open buffers."
   (save-excursion
     (indent-region (point-min) (point-max))))
 
+(my-dark)
+
 ;; automatically added stuff
 
 (custom-set-variables
@@ -188,7 +190,7 @@ Repeated invocations toggle between the two most recently open buffers."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(solarized-light))
+ '(custom-enabled-themes '(gruvbox-dark-hard))
  '(custom-safe-themes
    '("4cf9ed30ea575fb0ca3cff6ef34b1b87192965245776afa9e9e20c17d115f3fb" "a06658a45f043cd95549d6845454ad1c1d6e24a99271676ae56157619952394a" "c433c87bd4b64b8ba9890e8ed64597ea0f8eb0396f4c9a9e01bd20a04d15d358" default))
  '(flycheck-disabled-checkers '(erlang-rebar3))
