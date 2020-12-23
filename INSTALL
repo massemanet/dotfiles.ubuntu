@@ -2,7 +2,7 @@
 
 # set up sudo
 command -v sudo || su root -c "apt install -y sudo"
-groups | grep -q sudo || su root -c "adduser $USER sudo"
+groups | grep -q sudo || su root -c "/sbin/adduser $USER sudo"
 
 # timezone
 TZ="Europe/Stockholm"

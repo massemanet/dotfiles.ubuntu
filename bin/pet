@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-setup() {
+init() {
     [ ! -d "$DEST" ] && (cd "$(dirname "$DEST")" && git init "$(basename "$DEST")")
 
     if [ ! -d "$DEST/ssh" ]; then
@@ -72,8 +72,10 @@ pack() {
         --exclude ".password-store/$SHORT_WORK" \
         --exclude ".config/chromium" \
         --exclude ".config/BraveSoftware" \
-        --exclude ".kube/cache" \
+        --exclude ".config/gtk-3.0/settings.ini" \
+        --exclude ".config/sway/config" \
         --exclude ".config/spotify/User Data" \
+        --exclude ".kube/cache" \
         .aws/ .config/ .docker/ .gnupg/ .kube/ .local/ .password-store/ pet/ssh/
     gpg -c /tmp/pet.tgz
     mv /tmp/pet.tgz.gpg "$DEST"
@@ -88,8 +90,8 @@ unpack() {
 
 DEST="$HOME/pet"
 case "$1" in
-    init) setup;;
+    init)   init;;
     unpack) unpack "$2";;
-    pack) pack;;
-    *) echo "unrecognized command: $1";;
+    pack)   pack;;
+    *)      echo "unrecognized command: $1";;
 esac
