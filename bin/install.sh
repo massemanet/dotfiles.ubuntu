@@ -135,7 +135,14 @@ get-docker() {
 }
 
 get-go() {
-    sudo snap install go --classic
+    local DL="golang.org/dl"
+    local RE="go[0-9]+\.[0-9]+\.[0-9]+\.linux-amd64\.tar\.gz"
+    local TGZ
+
+    TGZ="$(curl -sSL "$DL" | grep -Eo "$RE" | sort -rV | head -n1)"
+    echo "found $TGZ"
+    curl -sSL "$DL/$TGZ" > /tmp/$$.tgz
+    sudo tar -C /usr/local -xzf /tmp/$$.tgz
 }
 
 get-grpcurl() {
@@ -330,8 +337,9 @@ get-pgadmin() {
 }
 
 get-rust() {
-    sudo snap install rustup --classic
-    rustup toolchain install stable
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > /tmp/rust.sh
+    chmod +x /tmp/rust.sh
+    /tmp/rust.sh --no-modify-path -y -q
 }
 
 get-spotify() {

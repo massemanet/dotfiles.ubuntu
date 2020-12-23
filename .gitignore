@@ -16,6 +16,7 @@ foo*
 /.bash_history
 /.bash_logout
 /.cache/
+/.cargo/
 /.cask/
 /.config/
 /.dbus/
@@ -54,6 +55,7 @@ foo*
 /.pki/
 /.pulse-cookie
 /.python_history
+/.rustup/
 /.screenlayout/
 /.slack*
 /.ssh/
