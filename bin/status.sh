@@ -29,13 +29,17 @@ _net() {
     [ -n "$T" ] && echo "$T"
 }
 
+_cpu_color() {
+    echo "#eeeeee"
+}
+
+_uptime() {
+    tr -d "." < /proc/uptime
+}
+
 _cpu(){
-    C="$(grep siblings /proc/cpuinfo | head -n1 | cut -f2 -d":" | tr -d " ")"
-    [ -r /tmp/uptime ] || tr -d "." < /proc/uptime > /tmp/uptime
-    tr -d "." < /proc/uptime > /tmp/uptime0
-    cat /tmp/uptime0 /tmp/uptime | \
-        (read -r a b; read -r c d; echo "$(( (100*(C*(a-c)-b+d))/(a-c) ))")
-    mv /tmp/uptime0 /tmp/uptime
+    local CPUS="$1" IDLE0="$2" UP0="$3" IDLE1="$4" UP1="$5"
+    echo "$(( (100*(CPUS*(IDLE0-IDLE1)-UP0+UP1))/(IDLE0-IDLE1) ))"
 }
 
 _ping() {
@@ -56,19 +60,21 @@ _color() {
 }
 
 _bar() {
+    LOAD="$(_cpu "$1")%"
     printf '[{"full_text": "%s"}' "$(_spotify)"
     printf ',{"full_text": "%s"}' "$(_net)"
     printf ',{"full_text": "%s"}' "$(_ping)ms"
-    printf ',{"full_text": "%s"}' "$(_cpu)%"
+    printf ',{"full_text": "%s", "color":"'"$(_cpu_color "$LOAD")"'"}' "$LOAD"
     printf ',{"full_text": "%s", "color":"'"$(_bat color)"'"}' "$(_bat)"
     printf ',{"full_text": "%s"}' "$(_date)"
     printf ',{"full_text": "%s"}' "$(_time)"
     echo "],"
 }
 
+CPUS="$(grep siblings /proc/cpuinfo | head -n1 | cut -f2 -d":" | tr -d " ")"
 echo '{"version": 1}'
 echo "["
 echo "[],"
 while sleep 2
-do _bar
+do U1="$(_uptime)"; _bar "$CPUS" $U0 $U1; U0="$U1"
 done
