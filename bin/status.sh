@@ -6,8 +6,23 @@ _spotify(){
     [ "$N" == "Spotify Premium" ] || echo "$N"
 }
 
+_bat_time() {
+    if [ -f /sys/class/power_supply/BAT0/charge_now ]; then
+        CHARGE="$(cat /sys/class/power_supply/BAT0/charge_now)"
+        CURRENT="$(cat /sys/class/power_supply/BAT0/current_now)"
+        [ "$CURRENT" -ne 0 ] && TIME="$(((60*CHARGE)/CURRENT))"
+    elif [ -f /sys/class/power_supply/BAT0/energy_now ]; then
+        ENERGY="$(cat /sys/class/power_supply/BAT0/energy_now)"
+        POWER="$(cat /sys/class/power_supply/BAT0/power_now)"
+        [ "$POWER" -ne 0 ] && TIME="$(((60*ENERGY)/POWER))"
+    else
+        TIME=0
+    fi
+    echo "$((TIME/60)):$((TIME%60))"
+}
+
 _bat() {
-    local STATUS CAPACITY CHARGE CURRENT
+    local STATUS CAPACITY CHARGE CURRENT ENERGY POWER TIME
     STATUS="$(cat /sys/class/power_supply/BAT0/status)"
     CAPACITY="$(cat /sys/class/power_supply/BAT0/capacity)"
     if [ "$1" = "color" ]; then
@@ -16,10 +31,10 @@ _bat() {
         else echo "11ee11"
         fi
     else
-        CHARGE="$(cat /sys/class/power_supply/BAT0/charge_now)"
-        CURRENT="$(cat /sys/class/power_supply/BAT0/current_now)"
-        [ "$CURRENT" -ne 0 ] && [ "$STATUS" != "Full" ] && TIME="($(((60*CHARGE)/CURRENT))min)"
-        echo "${STATUS}[${CAPACITY}%${TIME:-""}]"
+        if [ "$STATUS" = "Discharging" ]
+        then echo "${STATUS}[${CAPACITY}%][$(_bat_time)]"
+        else echo "${STATUS}[${CAPACITY}%]"
+        fi
     fi
 }
 
@@ -29,23 +44,19 @@ _net() {
     [ -n "$T" ] && echo "$T"
 }
 
+_ping() {
+    local T
+    T=$(ping -c1 -W1 8.8.8.8 | grep -Eo "time=[0-9\.]+" | cut -f2 -d"=")
+    [ -n "$T" ] && echo "${T}ms"
+}
+
 _cpu_color() {
     echo "#eeeeee"
 }
 
-_uptime() {
-    tr -d "." < /proc/uptime
-}
-
 _cpu(){
-    local CPUS="$1" IDLE0="$2" UP0="$3" IDLE1="$4" UP1="$5"
-    echo "$(( (100*(CPUS*(IDLE0-IDLE1)-UP0+UP1))/(IDLE0-IDLE1) ))"
-}
-
-_ping() {
-    local T
-    T=$(ping -c1 -W1 google.com | grep -Eo "time=[0-9\.]+" | cut -f2 -d"=")
-    [ -n "$T" ] && echo "${T}"
+    local CPUS="$1" UP0="$2" IDLE0="$3" UP1="$4" IDLE1="$5"
+    echo "$(( (100*(CPUS*(UP0-UP1)-(IDLE0-IDLE1)))/(UP0-UP1) ))%"
 }
 
 _date() {
@@ -60,11 +71,10 @@ _color() {
 }
 
 _bar() {
-    LOAD="$(_cpu "$1")%"
     printf '[{"full_text": "%s"}' "$(_spotify)"
     printf ',{"full_text": "%s"}' "$(_net)"
-    printf ',{"full_text": "%s"}' "$(_ping)ms"
-    printf ',{"full_text": "%s", "color":"'"$(_cpu_color "$LOAD")"'"}' "$LOAD"
+    printf ',{"full_text": "%s"}' "$(_ping)"
+    printf ',{"full_text": "%s", "color":"'"$(_cpu_color "$@")"'"}' "$(_cpu "$@")"
     printf ',{"full_text": "%s", "color":"'"$(_bat color)"'"}' "$(_bat)"
     printf ',{"full_text": "%s"}' "$(_date)"
     printf ',{"full_text": "%s"}' "$(_time)"
@@ -76,5 +86,7 @@ echo '{"version": 1}'
 echo "["
 echo "[],"
 while sleep 2
-do U1="$(_uptime)"; _bar "$CPUS" $U0 $U1; U0="$U1"
+do mapfile -d" " U1 < <(tr -d "." < /proc/uptime)
+   _bar "$CPUS" "${U1[@]}" "${U0[@]}"
+   U0=("${U1[@]}")
 done
