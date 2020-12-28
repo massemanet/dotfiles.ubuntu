@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 _spotify(){
     local N
     N="$(swaymsg -t get_tree | jq -r 'recurse(.nodes[]?)|recurse(.floating_nodes[]?)|select(.window_properties.class=="Spotify").name')"
@@ -7,6 +9,7 @@ _spotify(){
 }
 
 _bat_time() {
+    local CHARGE CURRENT ENERGY POWER TIME
     if [ -f /sys/class/power_supply/BAT0/charge_now ]; then
         CHARGE="$(cat /sys/class/power_supply/BAT0/charge_now)"
         CURRENT="$(cat /sys/class/power_supply/BAT0/current_now)"
@@ -15,17 +18,16 @@ _bat_time() {
         ENERGY="$(cat /sys/class/power_supply/BAT0/energy_now)"
         POWER="$(cat /sys/class/power_supply/BAT0/power_now)"
         [ "$POWER" -ne 0 ] && TIME="$(((60*ENERGY)/POWER))"
-    else
-        TIME=0
     fi
-    echo "$((TIME/60)):$((TIME%60))"
+    TIME="${TIME:-0}"
+    printf "%2.2u:%2.2u" "$((TIME/60))" "$((TIME%60))"
 }
 
 _bat() {
-    local STATUS CAPACITY CHARGE CURRENT ENERGY POWER TIME
+    local STATUS CAPACITY
     STATUS="$(cat /sys/class/power_supply/BAT0/status)"
     CAPACITY="$(cat /sys/class/power_supply/BAT0/capacity)"
-    if [ "$1" = "color" ]; then
+    if [ "${1:-""}" = "color" ]; then
         if [ "$STATUS" = "Discharging" ] && ((CAPACITY < 5))
         then echo "#ee1111"
         else echo "11ee11"
