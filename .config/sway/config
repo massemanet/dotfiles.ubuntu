@@ -15,7 +15,7 @@ set $term /usr/bin/kitty
 set $alttab $HOME/bin/alttab.sh
 
 # launcher
-set $launcher "bash -c 'compgen -c | grep -E "^[a-z]" | sort -u | wofi --dmenu | xargs -r swaymsg -t command exec'"
+set $launcher "bash -c 'compgen -c | grep -E "^[a-z]" | sort -u | wofi -G --dmenu | xargs -r swaymsg -t command exec'"
 
 for_window [class="Brave-browser"] move window to workspace 1:brave
 for_window [class="Chromium"] move window to workspace 2:chromium
