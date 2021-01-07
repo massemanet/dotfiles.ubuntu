@@ -5,7 +5,7 @@ set -euo pipefail
 _spotify(){
     local N
     N="$(swaymsg -t get_tree | jq -r 'recurse(.nodes[]?)|recurse(.floating_nodes[]?)|select(.window_properties.class=="Spotify").name')"
-    [ "$N" == "Spotify Premium" ] || echo "$N"
+    [ "$N" == "Spotify Premium" ] || echo "${N:0:35}"
 }
 
 _bat_time() {
