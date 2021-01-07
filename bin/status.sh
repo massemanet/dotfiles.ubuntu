@@ -68,9 +68,6 @@ _date() {
 _time() {
     date +'%H:%M:%S'
 }
-_color() {
-    echo "#11ee11"
-}
 
 _bar() {
     printf '[{"full_text": "%s"}' "$(_spotify)"
@@ -84,6 +81,7 @@ _bar() {
 }
 
 CPUS="$(grep siblings /proc/cpuinfo | head -n1 | cut -f2 -d":" | tr -d " ")"
+U0=(0 0)
 echo '{"version": 1}'
 echo "["
 echo "[],"
