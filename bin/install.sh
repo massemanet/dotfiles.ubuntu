@@ -31,19 +31,6 @@ get-awscli() {
              awscli
 }
 
-get-bazelisk() {
-    local VSN="${1:-}"
-    local GH="https://github.com/bazelbuild/bazelisk/releases"
-    local RE="download/v[.0-9-]+/bazelisk-linux-amd64"
-    local r
-
-    r="$(curl -sSL "$GH" | grep -Eo "$RE" | grep "$VSN" | sort -Vu | tail -n1)"
-    echo "found file $r"
-    curl -sSL "$GH/$r" > /tmp/bazelisk
-    chmod +x /tmp/bazelisk
-    cp /tmp/bazelisk ~/bin/bazel
-}
-
 get-bazel() {
     local VSN="${1:-}"
     local GH="https://github.com/bazelbuild/bazel/releases"
@@ -60,6 +47,19 @@ get-bazel() {
     sudo /tmp/bazel.sh
     sudo rm -f /etc/bash_completion.d/bazel-complete.bash
     sudo ln -s /usr/local/lib/bazel/bin/bazel-complete.bash /etc/bash_completion.d
+}
+
+get-bazelisk() {
+    local VSN="${1:-}"
+    local GH="https://github.com/bazelbuild/bazelisk/releases"
+    local RE="download/v[.0-9-]+/bazelisk-linux-amd64"
+    local r
+
+    r="$(curl -sSL "$GH" | grep -Eo "$RE" | grep "$VSN" | sort -Vu | tail -n1)"
+    echo "found file $r"
+    curl -sSL "$GH/$r" > /tmp/bazelisk
+    chmod +x /tmp/bazelisk
+    cp /tmp/bazelisk ~/bin/bazel
 }
 
 get-brave(){
@@ -84,14 +84,6 @@ get-chromium() {
        curl -sSL "$GH/$v" > /tmp/$$
        sudo dpkg -i /tmp/$$
     done
-
-#     echo 'deb http://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/ /' | \
-#         sudo tee /etc/apt/sources.list.d/home-ungoogled_chromium.list > /dev/null
-#     curl -s 'https://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/Release.key' | \
-#         gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home-ungoogled_chromium.gpg > /dev/null
-#     sudo apt update &&
-#         sudo apt install -y --auto-remove \
-#              ungoogled-chromium
 
     local GH="https://github.com/NeverDecaf/chromium-web-store/releases"
     local RE="download/v[0-9\\.]+/[a-zA-Z0-9\\.]+crx"
@@ -134,51 +126,6 @@ get-docker() {
     (cd ~/bin; ln -s ../pet/docker/docker-credential-pass . ; cd ~/.docker ; ln -s ../pet/docker/config.json .)
 }
 
-get-go() {
-    local DL="golang.org/dl"
-    local RE="go[0-9]+\.[0-9]+\.[0-9]+\.linux-amd64\.tar\.gz"
-    local TGZ
-
-    TGZ="$(curl -sSL "$DL" | grep -Eo "$RE" | sort -rV | head -n1)"
-    echo "found $TGZ"
-    curl -sSL "$DL/$TGZ" > /tmp/$$.tgz
-    sudo tar -C /usr/local -xzf /tmp/$$.tgz
-}
-
-get-grpcurl() {
-    local VSN="${1:-}"
-    local ITEM=grpcurl
-    local DLPAGE="https://github.com/fullstorydev/$ITEM/releases"
-    local RE="download/v[0-9\\.]+/${ITEM}_[0-9\\.]+_linux_x86_64.tar.gz"
-    local r TMP
-
-    sudo true
-    r="$(curl -sL "$DLPAGE" | grep -oE "$RE" | grep "$VSN" | sort -uV | tail -n1)"
-    [ -z "$r" ] && err "no file at $DLPAGE."
-    echo "found file: $r"
-    TMP="$(mktemp)"
-    curl -sL "$DLPAGE/$r" -o "$TMP"
-    sudo tar -xz -C /usr/local/bin --no-same-owner -f "$TMP" "$ITEM"
-    sudo chmod +x /usr/local/bin/"$ITEM"
-}
-
-get-gtk-server() {
-    local VSN="${1:-}"
-    local DLPAGE="http://gtk-server.org/stable"
-    local RE="gtk-server-[0-9\\.]+.tar.gz"
-    local r
-
-    sudo apt update \
-        && sudo apt install -y --auto-remove \
-                libcairo2-dev libgtk-3-dev glade
-    r="$(curl -sL "$DLPAGE" | grep -oE "$RE" | grep "$VSN" | sort -uV | tail -n1)"
-    echo "found $r"
-    curl -sSL "$DLPAGE/$r" > /tmp/gtk-server.tgz
-    tar -xz -C /tmp/ -f /tmp/gtk-server.tgz
-    cd /tmp/gtk-server-*/src
-    ./configure
-    make && sudo make install
-}
 get-docker-compose() {
     local r
     local VSN="${1:-}"
@@ -190,21 +137,6 @@ get-docker-compose() {
     echo "found file: $r"
     sudo curl -sL "$DLPAGE/$r" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
-}
-
-get-gopass() {
-    local r TMP
-    local VSN="${1:-}"
-    local DLPAGE="https://github.com/gopasspw/gopass/releases"
-    local RE="download/v[0-9\\.]+/gopass-[0-9\\.]+-linux-amd64.tar.gz"
-
-    TMP="$(mktemp)"
-    r="$(curl -sL "$DLPAGE" | grep -oE "$RE" | grep "$VSN" | sort -uV | tail -n1)"
-    [ -z "$r" ] && err "no file at $DLPAGE."
-    echo "found file: $r"
-    curl -sL "$DLPAGE/$r" -o "$TMP"
-    sudo tar -xz -C /usr/local/bin --no-same-owner -f "$TMP" gopass
-    sudo chmod +x /usr/local/bin/gopass
 }
 
 # emacs for wayland
@@ -263,6 +195,67 @@ get-erlang() {
     make
 }
 
+get-go() {
+    local DL="golang.org/dl"
+    local RE="go[0-9]+\.[0-9]+\.[0-9]+\.linux-amd64\.tar\.gz"
+    local TGZ
+
+    TGZ="$(curl -sSL "$DL" | grep -Eo "$RE" | sort -rV | head -n1)"
+    echo "found $TGZ"
+    curl -sSL "$DL/$TGZ" > /tmp/$$.tgz
+    sudo tar -C /usr/local -xzf /tmp/$$.tgz
+}
+
+get-gopass() {
+    local r TMP
+    local VSN="${1:-}"
+    local DLPAGE="https://github.com/gopasspw/gopass/releases"
+    local RE="download/v[0-9\\.]+/gopass-[0-9\\.]+-linux-amd64.tar.gz"
+
+    TMP="$(mktemp)"
+    r="$(curl -sL "$DLPAGE" | grep -oE "$RE" | grep "$VSN" | sort -uV | tail -n1)"
+    [ -z "$r" ] && err "no file at $DLPAGE."
+    echo "found file: $r"
+    curl -sL "$DLPAGE/$r" -o "$TMP"
+    sudo tar -xz -C /usr/local/bin --no-same-owner -f "$TMP" gopass
+    sudo chmod +x /usr/local/bin/gopass
+}
+
+get-grpcurl() {
+    local VSN="${1:-}"
+    local ITEM=grpcurl
+    local DLPAGE="https://github.com/fullstorydev/$ITEM/releases"
+    local RE="download/v[0-9\\.]+/${ITEM}_[0-9\\.]+_linux_x86_64.tar.gz"
+    local r TMP
+
+    sudo true
+    r="$(curl -sL "$DLPAGE" | grep -oE "$RE" | grep "$VSN" | sort -uV | tail -n1)"
+    [ -z "$r" ] && err "no file at $DLPAGE."
+    echo "found file: $r"
+    TMP="$(mktemp)"
+    curl -sL "$DLPAGE/$r" -o "$TMP"
+    sudo tar -xz -C /usr/local/bin --no-same-owner -f "$TMP" "$ITEM"
+    sudo chmod +x /usr/local/bin/"$ITEM"
+}
+
+get-gtk-server() {
+    local VSN="${1:-}"
+    local DLPAGE="http://gtk-server.org/stable"
+    local RE="gtk-server-[0-9\\.]+.tar.gz"
+    local r
+
+    sudo apt update \
+        && sudo apt install -y --auto-remove \
+                libcairo2-dev libgtk-3-dev glade
+    r="$(curl -sL "$DLPAGE" | grep -oE "$RE" | grep "$VSN" | sort -uV | tail -n1)"
+    echo "found $r"
+    curl -sSL "$DLPAGE/$r" > /tmp/gtk-server.tgz
+    tar -xz -C /tmp/ -f /tmp/gtk-server.tgz
+    cd /tmp/gtk-server-*/src
+    ./configure
+    make && sudo make install
+}
+
 get-intellij() {
     sudo snap install intellij-idea-community --classic
 }
@@ -297,6 +290,22 @@ get-kotlin() {
         && sudo tar -xz -C /opt/kotlin --strip-components=1 --no-same-owner -f "$TMP"
 }
 
+get-krew() {
+    cd "$(mktemp -d)" &&
+        curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.tar.gz" &&
+        tar zxvf krew.tar.gz &&
+        KREW=./krew-"$(uname | tr '[:upper:]' '[:lower:]')_$(uname -m | sed -e 's/x86_64/amd64/' -e 's/arm.*$/arm/')" &&
+        "$KREW" install krew &&
+        ln -s ~/.krew/bin/kubectl-krew ~/bin
+}
+
+get-ksniff() {
+    command -v kubectl || get-kubectl
+    kubectl krew > /dev/null || get-krew
+    kubectl krew install sniff &&
+        ln -s ~/.krew/bin/kubectl-sniff ~/bin
+}
+
 get-kubectl() {
     curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
     echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" > /tmp/kubernetes.list
@@ -308,10 +317,18 @@ get-kubectl() {
     sudo cp /tmp/kubectl_completion /etc/bash_completion.d
 }
 
-get-pgadmin() {
+get-pgadmin3() {
     sudo apt-get update \
         && sudo apt-get install -y --auto-remove \
                 pgadmin3
+}
+
+get-pgadmin4() {
+    curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+    sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+    sudo apt-get update &&
+        sudo apt-get install -y --auto-remove \
+             pgadmin4
 }
 
 get-python() {
@@ -319,21 +336,6 @@ get-python() {
         sudo apt-get install -y python2 python3 &&
         sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1 &&
         sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
-}
-
-get-wireshark() {
-    sudo apt-get update &&
-        sudo apt-get install -y --auto-remove \
-             tshark wireshark
-    sudo usermod -aG wireshark "$USER"
-}
-
-get-pgadmin() {
-    curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-    sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-    sudo apt-get update &&
-        sudo apt-get install -y --auto-remove \
-             pgadmin4
 }
 
 get-rust() {
@@ -365,6 +367,13 @@ get-sway(){
     sudo apt-get update && \
         sudo apt install -y --auto-remove \
              sway swaylock swayidle xwayland slurp grim wl-clipboard fzf wofi
+}
+
+get-wireshark() {
+    sudo apt-get update &&
+        sudo apt-get install -y --auto-remove \
+             tshark wireshark
+    sudo usermod -aG wireshark "$USER"
 }
 
 sudo true
